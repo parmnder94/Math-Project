@@ -75,7 +75,6 @@ None of steps 3–4 can be checked by simulation at the required precision. Mont
 **Further checks.**
 
 * Every transfer construction (Kronecker squares and cubes, two- and three-slot marked transfers with powers, inverse rotations, z/z̄ mixes) reproduces brute-force enumeration *word length by word length* to ≤ 3e-13 (`authoring/provenance/validation/`, log in `authoring/evidence/validation_logs.txt`).
-* The conjugator resummation was checked against explicit conjugator enumeration on independent cactus-geodesic Green's functions (no linearization), agreeing to 2e-13 (`authoring/evidence/superseded_heat_trace/truth_report.json`, part B).
 * The word-map statistics (E fix → τ(d), Cov → σ(gcd)) were checked by simulation.
 * Monte Carlo of the finite networks agrees with the predicted E X_N and Var X_N (`authoring/evidence/mc_summary.json`).
 
