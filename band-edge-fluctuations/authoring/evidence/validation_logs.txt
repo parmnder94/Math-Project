@@ -1,0 +1,29 @@
+### test4b.py (K=4 marked transfers, per-length vs brute force, z=5.63+0.3i)
+[('z', False, 2), ('z', True, 2)] per-length max diff 5.71e-15 scale 3.70e-02 t/eval 1.38s
+[('z', False, 2), ('z', False, 1), ('zb', True, 1)] per-length max diff 4.61e-15 scale 2.60e-02 t/eval 4.96s
+[('zb', False, 1), ('z', True, 1), ('zb', True, 2)] per-length max diff 5.14e-15 scale 2.49e-02 t/eval 5.07s
+[('z', False, 1), ('z', False, 3)] per-length max diff 7.37e-15 scale 2.79e-02 t/eval 1.24s
+[('zb', False, 3), ('z', True, 1)] per-length max diff 6.74e-15 scale 3.63e-02 t/eval 1.33s
+[('z', False, 1), ('zb', True, 1), ('z', False, 1)] per-length max diff 1.45e-14 scale 7.46e-02 t/eval 0.13s
+
+### test_lengths.py (K=6 Kronecker square and two-slot marked transfers, per-length, z=5.63+0.3i)
+M_2 per-length max diff 1.4019352237873784e-14 scale 0.35854553766424724
+Psi2 1,1 inv=False: per-length max diff 1.08e-14 scale 2.57e-01
+Psi2 1,1 inv=True: per-length max diff 2.68e-14 scale 2.79e-01
+Psi2 1,1 inv=False: per-length max diff 1.26e-14 scale 2.52e-01
+Psi2 1,1 inv=True: per-length max diff 2.51e-14 scale 2.83e-01
+Psi2 1,2 inv=True: per-length max diff 7.67e-15 scale 1.02e-01
+
+### test_md4.py (K=4 Kronecker powers M_2..M_4, per-length, z=5.63+0.3i)
+M_2 (K=4): per-length max diff 3.10e-13 scale 3.59e-01
+M_3 (K=4): per-length max diff 1.79e-14 scale 1.22e-01
+M_4 (K=4): per-length max diff 1.24e-13 scale 4.06e-02
+
+### check_spr.py (all transfer operators at z=5.6+0.06i must have spectral radius < 1)
+conjugator superoperator spr: 0.9052739574203736 0.9052739574203756
+tensor power 1: max spr = 1.5181
+tensor power 2: max spr = 0.9408
+tensor power 3: max spr = 0.5010
+tensor power 4: max spr = 0.3595
+worst over all transfers: 1.518127319687486
+note: tensor power 1 is never used (mean terms start at d=2; marked transfers have >= 2 slots). Largest radius among transfers actually used: 0.9408 (< 1), so every resummed series converges.

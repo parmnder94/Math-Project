@@ -1,0 +1,47 @@
+schema_version = "1.4"
+
+artifacts = ["/app/output/answer.json"]
+
+[task]
+name = "afterquery/band-edge-fluctuations"
+description = "For a spin-orbit tight-binding Hamiltonian on random triangle networks built from two random permutations, compute the large-N density, the O(1) mean correction, the limiting variance and the limiting third cumulant of the Lorentzian-broadened density of states just inside the band edge."
+authors = [{ name = "Dr. Prince", email = "princesolanki197@gmail.com" }]
+keywords = ["random matrix theory", "random permutation matrices", "strong convergence", "finite-size corrections", "word maps", "free group", "transfer operators", "mesoscopic fluctuations"]
+
+[metadata]
+author_name = "Dr. Prince"
+author_email = "princesolanki197@gmail.com"
+author_organization = "IIT Roorkee"
+author_profile = "https://scholar.google.com/citations?user=5aKFLTAAAAAJ&hl=en"
+research_advisor = ""
+referred_by = ""
+conflicts_of_interest = "None"
+domain = "mathematical-sciences"
+field = "applied-mathematics"
+subfield = "Random matrix theory: finite-size spectral statistics of random permutation models (strong convergence, word maps, transfer-operator resummation)"
+category = "Science"
+subcategory = "Applied Mathematics & Scientific Computing"
+tags = ["random matrix theory", "random permutation matrices", "strong convergence", "finite-size corrections", "word maps", "free group", "transfer operators", "mesoscopic fluctuations"]
+expert_time_estimate_hours = 24
+relevant_experience = "Research in applied probability and numerical spectral methods for large sparse random operators: cavity/resolvent recursions on tree-like graphs, transfer-operator resummation of combinatorial sums, and Monte Carlo validation of finite-size effects in random network models."
+difficulty_explanation = "There is no dataset: the random model is fully specified and the four targets are exact constants of it. The large-N density needs strong convergence (Bordenave-Collins) and the exact resolvent of the limit operator on the free group F_2, a tree of triangles with SU(2) hoppings. The O(1) quantities follow from the exact expansion X_N = (N-1) tr c_e + sum_w tr(c_w)(fix(w) - 1), which requires random-word-map statistics: E fix(u^d) -> number of divisors of d (Nica), and compound-Poisson fluctuations over primitive conjugacy classes identified with their inverses (Linial-Puder). The new obstacle is the band edge. At x0 = 5.6, eta = 0.06 the propagator transfer operators have spectral radius 0.94, so class sums decay like 0.94^l and brute-force enumeration fails. An earlier heat-trace version of this task, which enumeration can solve, was finished by a frontier-agent probe in under 15 minutes; enumeration to class length 10 is still ABL_ENUM10 off here. Every term of total power <= 4 must be resummed exactly with transfer operators on tensor powers of the propagators: Omega inserted at each rotation's cut, transposed inverse-letter slots for inverse rotations, cyclic closures, and Moebius inversion to primitive classes. Partial treatments fail the 1e-6 gate: resumming only up to total power 3 (k off by ABL_EM3K), dropping the power-cycle j|d structure (v off by ABL_J1V), unit weights for proper powers (m off by ABL_UNIT), or Gaussian fluctuations (k = 0). Monte Carlo of the finite networks resolves m and k only to tens of percent, so it cannot replace the theory."
+solution_explanation = "Linearize P = B sz + Ta l(a) + Tb l(b) + Tc l(a)l(b) + h.c. as a 4x4 self-adjoint element (Y = l(a^-1) + Tc l(b), Q = -1). Operator-valued branch resolvents on the 4-regular Cayley tree, found by Newton's method at z and conj(z), give G(w,e) = Phi_{s1}...Phi_{sk} G(e,e). Conjugator sums are resummed with one superoperator solve, giving Omega with F(y) = tr(Omega Phi_y). Mean: sum_y F(y^d) for d <= 4 by Kronecker-power transfers with cyclic closure. Variance and third cumulant: every product of class sums of total power <= 4 by marked transfer operators (the Omega of each rotated copy inserted at its cut, inverse rotations via transposed inverse letters), over all cyclically reduced words, then Moebius inversion to primitive classes. Remaining terms of total power >= 5 converge like 0.17^l and are summed over primitive classes up to length 11. The four constants then follow from the divisor-weighted formulas. NumPy only, a few minutes on 2 cores."
+verification_explanation = "The verifier parses /app/output/answer.json and requires each of z_inf, mean_correction, variance and third_cumulant to be within a relative error of 1e-6 of tests/truth.json. Ground truth comes from authoring/provenance/truth.py. It uses exact resummation of all terms of total power <= 4 and primitive-class tails to length 13 (change from length 12 to 13: TRUTH_CONV). It is cross-checked against an independent 6x6 linearization with different transfer code (agreement K6K4). Every transfer construction reproduces brute-force enumeration word length by word length to <= 3e-13. At a convergent point, plain enumeration matches the exact assembly. Monte Carlo of the finite networks (N = 200, MC_SAMPLES samples) agrees with E X_N and Var X_N. The reference solution (classes to length 11) is within SOLVE_ERR of the truth. Every shortcut in authoring/evidence/ablations.json misses the gate; the smallest miss is ABL_MIN."
+
+[verifier]
+timeout_sec = 300.0
+environment_mode = "separate"
+
+[verifier.environment]
+network_mode = "no-network"
+
+[agent]
+timeout_sec = 9000.0
+
+[environment]
+build_timeout_sec = 600.0
+cpus = 2
+memory_mb = 4096
+storage_mb = 10240
+gpus = 0
+network_mode = "public"
