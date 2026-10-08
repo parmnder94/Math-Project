@@ -16,3 +16,9 @@ FAILED tests/test_answer.py::test_value[third_cumulant] - AssertionError: thi...
 ========================= 1 failed, 4 passed in 0.04s ==========================
 reward=0
 {"z_inf":{"reported":0.1476936669067,"relative_error":0.0},"mean_correction":{"reported":0.1179457472883,"relative_error":0.0},"variance":{"reported":35.834664243632,"relative_error":0.0},"third_cumulant":{"reported":1.5662974116168582,"relative_error":2.000000000032778e-06}}
+== oracle (solution/solve.sh in bef-env, --network none, 2 CPUs, 4 GB; wall 1094 s)
+PASSED tests/test_answer.py::test_value[variance]
+PASSED tests/test_answer.py::test_value[third_cumulant]
+============================== 5 passed in 0.03s ===============================
+reward=1
+{"z_inf":{"reported":0.14769366690671853,"relative_error":1.2553500024447582e-13},"mean_correction":{"reported":0.11794574705746319,"relative_error":1.9571439692309423e-09},"variance":{"reported":35.834664220424,"relative_error":6.476409369310077e-10},"third_cumulant":{"reported":1.5662938893892526,"relative_error":2.487649049659175e-07}}
