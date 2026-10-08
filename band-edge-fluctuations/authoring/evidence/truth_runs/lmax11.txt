@@ -1,0 +1,2 @@
+time 506.5 (class table 13.5 ) conj_spr 0.9052739574203736 classes 12744
+{"z_inf": 0.1476936669067, "mean_correction": 0.1179457482002, "variance": 35.834664238689, "third_cumulant": 1.5662938298816}

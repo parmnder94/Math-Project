@@ -27,7 +27,7 @@ from math import gcd
 import numpy as np
 
 LAM, BFIELD, X0, ETA = 0.6, 1.5, 5.6, 0.06
-LMAX, EXACT = 11, 4
+LMAX, EXACT = 12, 4
 LNMAX = 6 * LMAX
 OUT = os.environ.get("ANSWER_PATH", "/app/output/answer.json")
 INV = [1, 0, 3, 2]                                  # letters a, a^-1, b, b^-1

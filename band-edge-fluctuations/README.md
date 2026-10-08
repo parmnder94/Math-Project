@@ -11,12 +11,12 @@ The task asks for four constants:
 * v = lim Var X_N;
 * k = lim E(X_N − E X_N)³.
 
-| constant | truth (about 1e-9 relative) |
+| constant | truth (z_inf, m, v to about 1e-9 relative; k to about 3e-8) |
 |---|---|
-| z_∞ | ⟨Z⟩ |
-| m | ⟨M⟩ |
-| v | ⟨V⟩ |
-| k | ⟨K⟩ |
+| z_∞ | 0.1476936669067 |
+| m | 0.1179457472883 |
+| v | 35.834664243632 |
+| k | 1.5662942790283 |
 
 ## Difficulty
 
@@ -32,15 +32,15 @@ The solution needs four steps, each research-level:
    * Hence the limits are the class sums v = Σ σ(gcd(n,n′)) Σ_κ T_κ(n)T_κ(n′) and k = Σ J₂(gcd) Σ_κ T_κ T_κ T_κ, where T_κ(n) sums tr c_w over all conjugates of u^{±n}.
 4. **Exact resummation (the new obstacle).**
    * Just inside the band edge, the per-letter transfer operators have spectral radius close to 1. The radius is 0.94 for the mixed z/z̄ transfer that controls v. Class contributions therefore decay only like 0.94^ℓ.
-   * Direct enumeration is hopeless. It is the route a frontier agent used to solve the earlier, faster-converging heat-trace version of this task in under 15 minutes (`authoring/evidence/probe_reports.md`). Even enumeration to class length 10 is still ⟨ENUM10⟩ relative off in v.
+   * Direct enumeration is hopeless. It is the route a frontier agent used to solve the earlier, faster-converging heat-trace version of this task in under 15 minutes (`authoring/evidence/probe_reports.md`). Even enumeration to class length 10 is still 81% relative off in v.
    * Every term of total power ≤ 4 has to be summed over all cyclically reduced words by transfer operators on tensor powers of the branch propagators:
      * Ω is inserted at each rotation's cut, using tr(ΩΦ_SΦ_P) = tr(Φ_P Ω Φ_S);
      * inverse rotations are handled through transposed inverse-letter slots;
      * cyclic closures are needed for powers;
      * the result is then restricted to primitive classes by Möbius inversion.
-   * Total power 4 is not optional. Resumming only up to total power 3 leaves k off by ⟨EM3K⟩.
+   * Total power 4 is not optional. Resumming only up to total power 3 leaves k off by 9.4e-5 relative.
 
-None of steps 3–4 can be checked by simulation at the required precision. Monte Carlo of the finite networks (N = 200, ⟨MCS⟩ samples) pins v only to about 1% and m and k to tens of percent. Conceptual slips are invisible to it but break the 1e-6 gate (table below):
+None of steps 3–4 can be checked by simulation at the required precision. Monte Carlo of the finite networks (N = 200, 80,000 samples) pins v only to about 0.5%, m to about 20% and k not at all (standard error larger than k). Conceptual slips are invisible to it but break the 1e-6 gate (table below):
 
 * dropping the j | d power-cycle structure;
 * using E fix(u^d) = 2 for every proper power;
@@ -52,7 +52,9 @@ None of steps 3–4 can be checked by simulation at the required precision. Mont
 |---|---|---|
 | 1 | gap-opening field of the same model (cusp problem) | solved to 1e-15 in ~27 min |
 | 2 | heat-trace statistics (fast convergence) | solved to ≤1e-9 in ~12 min |
-| 3 (shipped) | this version | ⟨PROBE3⟩ |
+| 3 (shipped) | this version | **solved**: reliable at ~36 min, final errors ≤ 3.2e-8 relative, by an independent method-of-images route |
+
+**Honest difficulty assessment.** Only one attempt was sampled on the shipped version, and it succeeded. The 0–1/8 target is therefore **not** demonstrated. The task is still a research-grade derivation (four theory steps plus an exact resummation), and every shortcut route fails the gate (table below).
 
 ## Reference solution
 
@@ -62,7 +64,7 @@ None of steps 3–4 can be checked by simulation at the required precision. Mont
 2. **Conjugator sums.** F(y) = Σ_g tr c_{gyg⁻¹} = tr(Ω_(first,last) Φ_y) comes from one adjoint superoperator solve.
 3. **Mean.** Σ_y F(y^d) for d ≤ 4 uses Kronecker-power transfers with cyclic closure.
 4. **Variance and third cumulant.** Every class-sum product of total power ≤ 4 uses a marked transfer with inserted Ω's, combining z/z̄ slots and forward/inverse rotations, followed by Möbius inversion to primitive classes.
-5. **Tails.** All terms of total power ≥ 5 converge like (0.17)^ℓ and are summed over primitive classes up to length 11.
+5. **Tails.** All terms of total power ≥ 5 converge like (0.17)^ℓ and are summed over primitive classes up to length 12.
 
 ## Verification
 
@@ -74,23 +76,34 @@ None of steps 3–4 can be checked by simulation at the required precision. Mont
 
 **Ground truth** comes from `authoring/provenance/truth.py`, with its report in `truth_report.json`.
 
-* **(A)** The same exact resummations with primitive-class tails to length 13. The relative change from length 12 to 13 is ⟨CONV⟩.
-* **(B)** An independent 6×6 linearization, with different code for every transfer, compared with the 4×4 engine on the same exact/enumerated split: agreement ⟨K6K4⟩.
-* **(C)** At a strongly convergent point, the exact assembly against plain class enumeration: agreement ⟨CONVPT⟩.
+* `tests/truth.json` is the exact-resummation assembly with primitive-class tails to length 13 (`authoring/evidence/truth_runs/lmax13.txt`, 1707 s).
+* Going from length 11 to 13 changes m by 7.7e-9, v by 1.4e-10 and k by 2.9e-7, relative (`truth_runs/lmax11.txt`).
+* **Independent derivation.** Probe 3 used a different route (cactus cavity plus method-of-images holonomy determinants, with no linearization). It agrees with the truth to 1e-13 (z_inf), 9.8e-10 (m), 3.7e-11 (v) and 3.2e-8 (k). The k difference is consistent with the truth's remaining tail, and it is 30× inside the gate.
 
 **Further checks.**
 
-* Every transfer construction (Kronecker squares and cubes, two- and three-slot marked transfers with powers, inverse rotations, z/z̄ mixes) reproduces brute-force enumeration *word length by word length* to ≤ 3e-14 (`authoring/provenance/validation/`, log in `authoring/evidence/validation_logs.txt`).
+* Every transfer construction (Kronecker squares and cubes, two- and three-slot marked transfers with powers, inverse rotations, z/z̄ mixes) reproduces brute-force enumeration *word length by word length* to ≤ 3e-13 (`authoring/provenance/validation/`, log in `authoring/evidence/validation_logs.txt`).
 * The conjugator resummation was checked against explicit conjugator enumeration on independent cactus-geodesic Green's functions (no linearization), agreeing to 2e-13 (`authoring/evidence/superseded_heat_trace/truth_report.json`, part B).
 * The word-map statistics (E fix → τ(d), Cov → σ(gcd)) were checked by simulation.
 * Monte Carlo of the finite networks agrees with the predicted E X_N and Var X_N (`authoring/evidence/mc_summary.json`).
 
-**Gate calibration** (`authoring/evidence/ablations.json`; relative errors at the shipped parameters):
+**Gate calibration** (`authoring/evidence/ablations.json`; worst relative error over the four keys, against the reference engine):
 
-⟨ABLATION_TABLE⟩
+| route | worst relative error | key |
+|---|---|---|
+| Gaussian fluctuations (k = 0) | 1.0 | k |
+| power cycles ignored (j = 1 only) | 3.7e-2 | k |
+| E fix(u^d) = 2 for every proper power | 1.3e-2 | m |
+| E X_N = 2(N−1)z + m convention | 2.5 | m |
+| exact resummation only to total power 3 | 9.4e-5 | k |
+| no resummation, classes ≤ 6 | 0.91 | v |
+| no resummation, classes ≤ 8 | 0.87 | v |
+| no resummation, classes ≤ 10 | 0.81 | v |
+
+Every route misses the 1e-6 gate. The smallest miss is 9.4e-5, which is 94× the gate.
 
 **Rebuild.**
 
-* `python3 authoring/provenance/truth.py <out>` regenerates the truth, in about an hour.
+* `python3 authoring/provenance/truth.py <out>` regenerates the truth (assemblies at lengths 11, 12 and 13, plus the 6×6 cross-check), in a few hours on 2 cores.
 * `bash authoring/evidence/verifier_local_run.sh <dir>` re-runs the verifier image.
 * Oracle and nop runs are in `authoring/evidence/local_runs/`.
