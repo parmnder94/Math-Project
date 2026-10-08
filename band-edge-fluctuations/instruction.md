@@ -1,5 +1,3 @@
-# Band-edge density-of-states fluctuations on random spin-orbit triangle networks
-
 Fix N and draw two independent, uniformly random permutations σ and τ of {0, ..., N-1}. Every vertex v of the network has three outgoing bonds: an a-bond to σ(v), a b-bond to τ(v) and a c-bond to σ(τ(v)). So v, τ(v) and σ(τ(v)) always span a triangle.
 
 A spin-1/2 electron moves on this network. Its Hamiltonian on C^2 ⊗ C^N (spin ⊗ site) is
@@ -20,9 +18,7 @@ X_N is random through σ and τ. As N → ∞:
 
 These limits exist. We need all four constants z_∞, m, v and k.
 
-## Output
-
-Write `/app/output/answer.json` containing a JSON object with four numeric fields:
+**Output.** Write `/app/output/answer.json` containing a JSON object with four numeric fields:
 
 - `z_inf`: z_∞
 - `mean_correction`: m
