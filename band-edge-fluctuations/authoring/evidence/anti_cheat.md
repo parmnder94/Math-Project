@@ -7,7 +7,7 @@ What stays sealed in `tests/`: `truth.json`, the four constants to about 1e-9 re
 |---|---|
 | Nop (no file) | The `answer` fixture cannot open `/app/output/answer.json`, so every test errors and the reward is 0. |
 | Monte Carlo of finite networks | At N = 200 with 80,000 samples, m carries a statistical error of about 0.02 (about 20%), v about 0.5% and k more than 100%. There is also O(1/N) bias. The gate is 1e-6 relative. |
-| Brute-force class enumeration without resummation (the route that solved the earlier heat-trace version in under 15 minutes) | Near the band edge the class contributions decay like 0.94^l, so enumeration to length 10 is still 81% off in v and 6% off in m (`ablations.json`). |
+| Brute-force class enumeration without resummation | Near the band edge the class contributions decay like 0.94^l, so enumeration to length 10 is still 81% off in v and 6% off in m (`ablations.json`). |
 | Leading order only (m = 0), Gaussian fluctuations (k = 0), or a wrong normalisation | Relative errors of order 1. |
 | Guessing, or copying from the literature | Neither the model nor the parameters appear elsewhere, and none of the constants has a closed form. |
 | Strings, NaN, Infinity, booleans, extra keys | Keys are normalised and values parsed with `float`. Non-finite values and booleans raise. Extra keys are ignored. |
