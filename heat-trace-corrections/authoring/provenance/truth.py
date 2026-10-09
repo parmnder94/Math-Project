@@ -1,4 +1,4 @@
-"""Ground truth for heat-trace-corrections.
+"""Ground truth for heat-trace-corrections (produced by the reference solver itself, at larger cutoffs).
 Usage: python3 truth.py <out_dir>
 Runs solution/solve.py with growing cutoffs (class words up to LMAX, pairs of classes up to total length
 LPAIR) and writes <out_dir>/truth.json (LMAX = 13, LPAIR = 14) and <out_dir>/truth_report.json."""

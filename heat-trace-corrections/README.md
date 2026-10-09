@@ -18,7 +18,7 @@ E X_N = 2N z_∞ + m + m₁/N + O(N⁻²),  Var X_N = v + v₁/N + O(N⁻²).
 
 ## Difficulty
 
-**No dataset.** The model is fully specified, and the five targets are exact constants of it. The ground truth comes from the mathematics (see Verification), not from any solver output.
+**No dataset.** The model is fully specified, and the five targets are exact constants of it. The ground truth is computed by the reference machinery (`solution/solve.py`) run at larger cutoffs. Its correctness rests on independent checks, listed under Verification.
 
 **Leading orders (known theory).**
 
@@ -61,19 +61,20 @@ None of this can be checked by simulation at the required precision. Monte Carlo
 * Each of the five constants must be within a **relative error of 1e-6** of `tests/truth.json`.
 * The verifier never runs agent code.
 
-**Ground truth** is `authoring/provenance/truth.py`: classes up to length 13 and pairs up to total length 14. The convergence record is in `authoring/evidence/truth_report.json`. Relative to the truth, the settings below give:
+**Ground truth: how it is produced.** `tests/truth.json` is **not** independent of the reference code. `authoring/provenance/truth.py` runs the reference solver `solution/solve.py` itself, with larger cutoffs: classes up to length 13 and pairs up to total length 14, against 11 and 12 in the shipped solution. The convergence record is in `authoring/evidence/truth_report.json`. Relative to the truth, the settings below give:
 
 | setting | m₁ | v₁ |
 |---|---|---|
 | classes 12, pairs 13 | 3.4e-11 | 4.3e-9 |
 | classes 11, pairs 12 (reference solution) | 2.4e-9 | 1.0e-8 |
 
-**Independent checks** (`authoring/provenance/checks.py`, results in `authoring/evidence/checks.json`):
+**Why the truth can be trusted: independent checks.** These use separate code paths (`authoring/provenance/checks.py`, results in `authoring/evidence/checks.json`), plus two independent derivations:
 
 * **Heat kernel.** The contour trace equals the exact moment series Σ (−β)ⁿ τ(Pⁿ)/n! (walks on reduced words) to 9e-16.
 * **Word maps.** The quotient expansion of E fix and E[fix fix] equals exact averages over all of S₅ × S₅ for 16 single words and pairs, as exact rationals.
 * **Finite N.** E X_N and Var X_N from the class sums plus the finite-N expansion match brute force over S_N × S_N for N = 4…7. The brute force takes σ over conjugacy-class representatives, weighted. The mean agrees to ≤ 6e-12 and the variance to ≤ 4e-8 (pair truncation).
 * **Coefficient extraction.** m₁ and v₁ from the pruned χ ≥ −1 enumeration match Richardson extrapolation of the full (unpruned) expansion. That extrapolation is evaluated in exact rational arithmetic at N = 2·10⁴ … 1.6·10⁵, with the same class truncation, and agrees to 3e-10 (m₁) and 3e-9 (v₁).
+* **Independent derivations.** Two solvers derived the theory separately (`authoring/evidence/probe_reports.md`). One used a compiled enumeration with rank-1 and rank-2 image graphs, the other an Ihara–Bass factorization with core counts. Both reproduce all five constants, agreeing with `tests/truth.json` to about 1e-11 or better.
 * **Consistency with exact small-N data.** N(Var X_N − v) = 0.345, 0.350, 0.333, 0.324 for N = 4…7. This approaches v₁ = 0.279 with a 1/N² term, and the exact means behave the same way for m₁.
 
 **Gate calibration** (`authoring/evidence/ablations.json`; worst relative error over the five keys, against the truth):

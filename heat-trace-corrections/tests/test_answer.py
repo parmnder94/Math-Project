@@ -1,11 +1,12 @@
 """Verifier for heat-trace-corrections.
 
 The five constants are exact mathematical quantities of the random-permutation model in the instruction.
-tests/truth.json holds them to about 1e-8 relative or better (authoring/provenance/truth.py: exact
-class sums of the heat kernel, Linial-Puder quotient expansion of word-map moments to order 1/N, classes
-up to length 13 and pairs of classes up to total length 14; cross-checked against exact finite-N averages
-over S_N x S_N and Richardson extrapolation of the unpruned expansion). The verifier only parses
-/app/output/answer.json; it never runs agent code.
+tests/truth.json is produced by authoring/provenance/truth.py, which runs the reference solver
+(solution/solve.py) at larger cutoffs (classes to length 13, pairs to total length 14), so it is not
+independent of the reference code. Its correctness rests on independent checks: exact averages over
+S_N x S_N for N = 4..7, Richardson extrapolation of the unpruned expansion in exact rational arithmetic,
+the exact heat-kernel moment series, and two independent solver derivations agreeing to about 1e-11.
+The verifier only parses /app/output/answer.json; it never runs agent code.
 """
 import json
 import math
