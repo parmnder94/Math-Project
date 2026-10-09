@@ -1,0 +1,10 @@
+== oracle (solution/solve.sh in bef-env, --network none, 2 CPUs, 4 GB; wall 87 s with other jobs on the host)
+PASSED tests/test_answer.py::test_value[v1]
+============================== 6 passed in 0.10s ===============================
+reward=1
+{"z_inf":{"reported":1.3078808147368284,"relative_error":0.0},"m":{"reported":-2.447016342389715,"relative_error":3.391896976049285e-13},"m1":{"reported":0.011810119905848128,"relative_error":2.4400860275318133e-09},"v":{"reported":2.8841233692771993,"relative_error":2.2062005652368976e-11},"v1":{"reported":0.2786938355356328,"relative_error":1.0344675765809191e-08}}
+== nop (empty output dir)
+ERROR tests/test_answer.py::test_value[v1] - FileNotFoundError: [Errno 2] No ...
+============================== 6 errors in 0.04s ===============================
+reward=0
+

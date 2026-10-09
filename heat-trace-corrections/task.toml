@@ -1,0 +1,47 @@
+schema_version = "1.4"
+
+artifacts = ["/app/output/answer.json"]
+
+[task]
+name = "afterquery/heat-trace-corrections"
+description = "For a spin-orbit hopping Hamiltonian on random 4-regular graphs built from two uniform random permutations, compute the large-N density, the O(1) mean correction, the 1/N mean correction, the limiting variance and the 1/N variance correction of the heat trace Tr[exp(-beta H_N) Q_N]."
+authors = [{ name = "Dr. Prince", email = "princesolanki197@gmail.com" }]
+keywords = ["random matrix theory", "random permutation matrices", "word maps", "Stallings graphs", "finite-size corrections", "random graph covers", "free group", "heat kernel"]
+
+[metadata]
+author_name = "Dr. Prince"
+author_email = "princesolanki197@gmail.com"
+author_organization = "IIT Roorkee"
+author_profile = "https://scholar.google.com/citations?user=5aKFLTAAAAAJ&hl=en"
+research_advisor = ""
+referred_by = ""
+conflicts_of_interest = "None"
+domain = "mathematical-sciences"
+field = "applied-mathematics"
+subfield = "Random matrix theory: finite-size spectral fluctuations of random permutation models"
+category = "Science"
+subcategory = "Applied Mathematics & Scientific Computing"
+tags = ["random matrix theory", "random permutation matrices", "word maps", "Stallings graphs", "finite-size corrections", "random graph covers", "free group", "heat kernel"]
+expert_time_estimate_hours = 24
+relevant_experience = "Research in applied probability and numerical spectral methods for large sparse random operators: cavity/resolvent recursions on tree-like graphs, transfer-operator resummation of combinatorial sums, and Monte Carlo validation of finite-size effects in random network models."
+difficulty_explanation = "There is no dataset: the random model is fully specified and the five targets are exact constants of it. The leading quantities follow from known theory (strong convergence, the exact expansion X_N = (N-1) tr c_e + sum_w tr(c_w)(fix(w) - 1), Nica and Linial-Puder for E fix and the Poisson cycle limit). The 1/N coefficients m1 and v1 have no off-the-shelf formula. E fix_w(N) and E[fix_w1 fix_w2](N) must be expanded to order 1/N through the Linial-Puder quotient expansion: a sum over all folded quotients of the cycle graph(s) of (N)_V/((N)_{E_a}(N)_{E_b}). The 1/N term of a single word is the number of Euler-characteristic -1 quotients minus E_a E_b of each chi = 0 quotient (from the falling factorials). For the covariance there are three pieces: connected chi = -1 quotients of the two-cycle union; -E_a E_b on connected chi = 0 quotients; and a cross term -(E_a1 E_b2 + E_b1 E_a2) from disconnected quotients, because (N)_{p+q} != (N)_p (N)_q at order 1/N. These must be enumerated over every class and every pair of classes, including proper powers, with the class sums of the heat kernel on the free group, and the pair sums must be carried to total word length 12 for 1e-6. Plausible slips miss the gate by orders of magnitude: dropping the falling-factorial term (m1 off by a factor 40), dropping the disconnected cross term (v1 off 180%), dropping it on connected chi = 0 quotients (v1 off 64%); even giving proper powers no 1/N term (5e-6) or stopping the pairs at total length 10 (1.5e-6) fails. Monte Carlo cannot resolve m1 at all, and v1 only to tens of percent. In practice this is the work of a research mathematician in random matrix theory and combinatorial group theory (word measures on symmetric groups, Stallings graphs, finite-size corrections for random graph covers). For such a specialist it is several days of derivation and validation."
+solution_explanation = "Class sums: on the 4-regular Cayley tree the resolvent factorizes, G_z(w,e) = Phi_{s1}...Phi_{sk} G_z(e,e), with branch resolvents from Newton's method; conjugator sums are resummed exactly (F_z(y) = tr(Omega Phi_y)) and the heat kernel is the trapezoid contour integral (1/2 pi i) oint exp(-beta z) F_z dz on |z| = 12 with 48 nodes. Word maps: a depth-first walk enumerates the folded quotients of one cycle or of the union of two cycles with chi >= -1 (classes labelled in order of appearance, so each partition once). That gives a1(w) = #(chi = -1) - sum_{chi = 0} E_a E_b and, for pairs, C0 = #(connected chi = 0) and C1 = #(connected chi = -1) - sum_{connected chi = 0} E_a E_b - sum (E_a1 E_b2 + E_b1 E_a2). Quotient counts are cached on orbits of the eight signed letter permutations. Assembly over primitive classes up to length 11 with their powers, and pairs of classes up to total length 12: z_inf = tr c_e/2, m = sum F (tau(d) - 1) - tr c_e, m1 = sum F a1, v = sum F F C0, v1 = sum F F C1. NumPy only, about 80 s on 2 cores."
+verification_explanation = "The verifier parses /app/output/answer.json and requires each of z_inf, m, m1, v and v1 to be within a relative error of 1e-6 of tests/truth.json. Ground truth comes from authoring/provenance/truth.py with classes up to length 13 and pairs up to total length 14 (cutoffs 12/13 differ from it by at most 4.3e-9 relative). Independent checks (authoring/provenance/checks.py, results in authoring/evidence/checks.json): the contour heat-kernel trace equals the exact moment series to 9e-16; the quotient expansion of E fix and E[fix fix] equals exact averages over all of S_5 x S_5 for 16 single words and pairs (exact rationals); E X_N and Var X_N from the class sums and the finite-N expansion match brute force over S_N x S_N for N = 4..7 to 6e-12 (mean) and 4e-8 (variance); and m1, v1 from the pruned enumeration match Richardson extrapolation of the full expansion in exact rational arithmetic to 3e-10 (m1) and 3e-9 (v1). The reference solution (classes to 11, pairs to 12) is within 1.0e-8 relative of the truth. Every shortcut in authoring/evidence/ablations.json misses the gate; the smallest miss is 1.5e-6 (pairs truncated at total length 10)."
+
+[verifier]
+timeout_sec = 600.0
+environment_mode = "separate"
+
+[verifier.environment]
+network_mode = "no-network"
+
+[agent]
+timeout_sec = 9000.0
+
+[environment]
+build_timeout_sec = 600.0
+cpus = 2
+memory_mb = 4096
+storage_mb = 10240
+gpus = 0
+network_mode = "public"

@@ -1,11 +1,11 @@
-"""Verifier for band-edge-fluctuations.
+"""Verifier for heat-trace-corrections.
 
-The four constants are exact mathematical quantities of the random-permutation model in the
-instruction. tests/truth.json holds them to about 1e-9 relative (authoring/provenance/truth.py:
-exact transfer-operator resummation of all terms of total power <= 4, primitive-class sums to length
-13 for the rest; cross-checked with an independent 6x6 linearization, per-length brute force and
-Monte Carlo of the finite networks). The verifier only parses /app/output/answer.json; it never runs
-agent code.
+The five constants are exact mathematical quantities of the random-permutation model in the instruction.
+tests/truth.json holds them to about 1e-8 relative or better (authoring/provenance/truth.py: exact
+class sums of the heat kernel, Linial-Puder quotient expansion of word-map moments to order 1/N, classes
+up to length 13 and pairs of classes up to total length 14; cross-checked against exact finite-N averages
+over S_N x S_N and Richardson extrapolation of the unpruned expansion). The verifier only parses
+/app/output/answer.json; it never runs agent code.
 """
 import json
 import math
@@ -19,7 +19,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 TRUTH = json.load(open(os.path.join(HERE, "truth.json")))
 METRICS = "/logs/verifier/metrics.json"
 REL_TOL = 1e-6
-FIELDS = ["z_inf", "mean_correction", "variance", "third_cumulant"]
+FIELDS = ["z_inf", "m", "m1", "v", "v1"]
 
 _metrics = {}
 
