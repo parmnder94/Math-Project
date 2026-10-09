@@ -33,4 +33,21 @@ Final answer against `tests/truth.json` (relative error):
 
 The probe's derivation is independent of the reference, so its answer is also a second derivation of the ground truth.
 
-**Lighter probe.** ⟨LIGHTER⟩
+**Lighter probe.** Solved in about 68 min, also independently:
+
+* an Ihara–Bass-type factorization, Tr e^{−βH_G} = 2N z_∞ + Σ_w φ(w) fix_w, checked on small graphs;
+* rank-1 and rank-2 quotient counts for the mean, summed to word length 12 in C++;
+* a core-count decomposition of the variance, validated on toy weightings against exact S_N character theory.
+
+Its relative errors against the truth are 3.4e-11 (m1) and 6.0e-11 (v1); z_inf, m and v agree to 1e-13 or better.
+
+**Small-model probe (Haiku class).** Not solved. It stopped after about 32 min with only z_inf correct:
+
+* m was right to about 1e-5;
+* m1 was rough (0.01192 against 0.011810);
+* v came only from Monte Carlo (2.889 ± 1%);
+* v1 was missing.
+
+Its naive Poisson-cycle variance formula failed its own checks, and it did not find the quotient expansion for the 1/N terms.
+
+**Calibration consequence.** Both model tiers solved this version within the 9000 s budget, in about an hour each. The agent timeout in `task.toml` is the remaining calibration lever. The shipped budget is the 3600 s minimum: the frontier probe needed about 58 min for its first correct answer file, the lighter probe about 68 min, and the small model gave up. Every probe was told 9000 s, so these times were not taken under time pressure.

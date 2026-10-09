@@ -16,4 +16,4 @@ We need the five constants $z_\infty$, $m$, $m_1$, $v$ and $v_1$.
 
 Write `/app/output/answer.json` containing a JSON object with five numeric fields: `z_inf`, `m`, `m1`, `v` and `v1`. Each value is compared with the exact constant and must agree to a relative error of at most $10^{-6}$. Extra keys are ignored.
 
-You have 9000 seconds to complete this task. Do not cheat by using online solutions or hints specific to this task.
+You have 3600 seconds to complete this task. Do not cheat by using online solutions or hints specific to this task.
