@@ -1,0 +1,47 @@
+schema_version = "1.4"
+
+artifacts = ["/app/output/answer.json"]
+
+[task]
+name = "afterquery/magnetic-entropy-anomaly"
+description = "For a charged Brownian particle on a torus with a temperature gradient, a rotating anisotropic drag tensor and a fixed magnetic field, find the exact gap between the small-mass limit of the heat entropy flow and the time-reversal relative entropy rate of the limiting position process."
+authors = [{ name = "Dr. Prince", email = "princesolanki197@gmail.com" }]
+keywords = ["stochastic thermodynamics", "Langevin dynamics", "small-mass limit", "entropy production", "entropy anomaly", "homogenization", "magnetic field", "relative entropy"]
+
+[metadata]
+author_name = "Dr. Prince"
+author_email = "princesolanki197@gmail.com"
+author_organization = "IIT Roorkee"
+author_profile = "https://scholar.google.com/citations?user=5aKFLTAAAAAJ&hl=en"
+research_advisor = ""
+referred_by = ""
+conflicts_of_interest = "None"
+domain = "mathematical-sciences"
+field = "applied-mathematics"
+subfield = "Stochastic thermodynamics: small-mass limits of Langevin dynamics with temperature gradients"
+category = "Science"
+subcategory = "Applied Mathematics & Scientific Computing"
+tags = ["stochastic thermodynamics", "Langevin dynamics", "small-mass limit", "entropy production", "entropy anomaly", "homogenization", "magnetic field", "relative entropy"]
+expert_time_estimate_hours = 12
+relevant_experience = "Research in stochastic thermodynamics and multiscale analysis of stochastic differential equations: small-mass (Smoluchowski-Kramers) limits, homogenization with Poisson equations, entropy production and path-space relative entropy."
+difficulty_explanation = "When the particle's mass goes to zero, its position follows a simpler (overdamped) diffusion, and one would expect the heat it releases to equal how irreversible that limiting motion is. With a temperature gradient this fails: some heat is dissipated by velocity fluctuations that the overdamped motion cannot see. The task asks for exactly this gap. Getting it requires three non-trivial steps. (1) The overdamped limit itself: with a drag tensor that rotates in space and a magnetic field, the limit gains a noise-induced drift, and its stationary state carries a hidden circulating current even though the density is uniform. (2) The irreversibility of that limit with the field held fixed, which is not zero because of that current. (3) The small-mass limit of the heat flow, whose naive expression blows up like 1/sqrt(m); removing the singularity needs an exact rewriting and a Poisson equation for the fast velocity process in the third Hermite sector, where the magnetic field couples the four cubic modes. Natural shortcuts give wrong exact values: assuming the uniform density means reversibility gives 19/210, assuming no anomaly gives 0, dropping the field from the fast velocity process gives 19/400, and replacing the drag by its isotropic average gives 724/16575. Simulation cannot replace the derivation: the answer is an exact fraction and Monte Carlo reaches only about 1% even at small mass. In practice this is the work of a researcher in stochastic thermodynamics or applied probability who studies small-mass limits of Langevin equations; for such a specialist it is about a day of careful derivation."
+solution_explanation = "Scale u = sqrt(m) V. The fast velocity process at fixed position is Ornstein-Uhlenbeck with drift matrix Gamma - J and invariant Maxwellian of variance T. The limiting position diffusion has mobility M = (Gamma - J)^-1 = [R diag(2,1) R^T + J]/3, drift M grad T + T div M and diffusion T M_s; its stationary density is uniform and its current is j = rho0 (J/3) grad T. Its fixed-field relative entropy rate is int j^T D^-1 j / rho0 = I_T/4, with I_T = <T'^2/T> = 1/5. For the heat rate, stationarity gives the exact identity S_dot_m = -<S>/(2 sqrt m) with S = (grad T . u)(|u|^2 - 4T)/T^2; solving L0 chi = S in the cubic Hermite sector of the local drag frame (a 4x4 linear system coupled by the field) gives S_dot_m = <L1 chi>/2 exactly, hence lim S_dot_m = -<chi S>/4 = (19/42) I_T = 19/210. Delta = 19/210 - 1/20 = 17/420. solution/solve.py repeats every step in exact SymPy arithmetic in about a second."
+verification_explanation = "The verifier parses /app/output/answer.json and accepts delta either as an exact fraction equal to 17/420 or as a decimal within 1e-12 of it. Ground truth: the value was derived analytically (the author's step-by-step solution, following the small-mass framework in Birrell, J. Stat. Phys. 2018, doi:10.1007/s10955-018-2162-2), and solution/solve.py recomputes it in exact arithmetic, so the truth and the reference share one derivation. Independent checks: the cubic Hermite operator matrix was re-extracted numerically at random frame angles and temperatures (residual 1e-14), every inverse, contraction and integral was rechecked in SymPy, and a Monte Carlo simulation of the full underdamped dynamics at several small masses agrees with the predicted heat-rate limit 19/210 after time-step extrapolation (0.0905 at m = 0.04; authoring/evidence/mc_summary.json). Plausible wrong routes give 19/210, 0, 19/400 and 724/16575 (authoring/evidence/ablations.json), all rejected by the exact comparison."
+
+[verifier]
+timeout_sec = 600.0
+environment_mode = "separate"
+
+[verifier.environment]
+network_mode = "no-network"
+
+[agent]
+timeout_sec = 9000.0
+
+[environment]
+build_timeout_sec = 600.0
+cpus = 2
+memory_mb = 4096
+storage_mb = 10240
+gpus = 0
+network_mode = "public"

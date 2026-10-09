@@ -1,0 +1,8 @@
+{
+  "target_lim_Sdot": "19/210 = 0.090476",
+  "estimator": "S_dot_m = -<S>/(2 sqrt m), S = (grad T . u)(|u|^2 - 4T)/T^2, Euler-Maruyama, 20000 particles; statistical error about 0.001",
+  "fixed_step_dt_eq_m_over_40": {"m=0.04": 0.09459, "m=0.02": 0.09480, "m=0.01": 0.09443},
+  "step_refinement_at_m_0.04": {"dt=m/20": 0.10026, "dt=m/40": 0.09459, "dt=m/80": 0.09190, "dt=m/160": 0.09115},
+  "richardson_dt_to_0_at_m_0.04": 0.0905,
+  "note": "At fixed dt/m the Euler bias is the same at every mass, so the fixed-step values sit about 4% high for all m; refining the step removes it and the extrapolated value agrees with 19/210 to within the statistical error. Mass dependence at m <= 0.04 is below the statistical error."
+}

@@ -1,0 +1,27 @@
+{
+  "reference": {
+    "lim_Sdot": "19/210",
+    "I0": "1/20",
+    "Delta": "17/420"
+  },
+  "time reversal also flips the field (or: uniform density taken as reversible), I0 = 0": {
+    "lim_Sdot": "19/210",
+    "I0": "0",
+    "Delta": "19/210"
+  },
+  "no entropy anomaly: heat rate equals the overdamped path irreversibility": {
+    "lim_Sdot": "1/20",
+    "I0": "1/20",
+    "Delta": "0"
+  },
+  "Lorentz force dropped from the fast velocity process (kept in the current)": {
+    "lim_Sdot": "39/400",
+    "I0": "1/20",
+    "Delta": "19/400"
+  },
+  "isotropic drag Gamma -> (3/2) I": {
+    "lim_Sdot": "36/425",
+    "I0": "8/195",
+    "Delta": "724/16575"
+  }
+}
