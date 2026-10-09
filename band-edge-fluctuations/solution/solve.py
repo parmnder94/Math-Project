@@ -169,8 +169,11 @@ def psi_marked(slots):
         if key not in kernels:
             if not blocks: kernels[key] = X
             else:
-                L = kernel(blocks[:-1])
-                kernels[key] = [[sum(L[a][p] @ Ins(blocks[-1], (p, q)) @ X[q][b] for (p, q) in PAIRS) for b in range(4)] for a in range(4)]
+                L = np.block(kernel(blocks[:-1])); D = L.shape[0] // 4
+                Mid = np.zeros_like(L)
+                for (p, q) in PAIRS: Mid[p * D:(p + 1) * D, q * D:(q + 1) * D] = Ins(blocks[-1], (p, q))
+                Y = L @ (Mid @ np.block(X))
+                kernels[key] = [[Y[a * D:(a + 1) * D, b * D:(b + 1) * D] for b in range(4)] for a in range(4)]
         return kernels[key]
     rest = tuple(range(1, n)); tot = 0
     for mask in range(1 << len(rest)):
@@ -203,23 +206,45 @@ def cyc_reduced(l):
     rec([]); return out
 
 
+def class_words(l):
+    """Primitive cyclically reduced words of length l that are minimal among their rotations and the rotations
+    of their inverse (one per class mod inversion), as rows of an int array, in lexicographic order."""
+    inv = np.array(INV)
+    W = np.arange(4)[:, None]
+    for _ in range(l - 1):
+        W = np.concatenate([np.column_stack([W, np.full(len(W), x)]) for x in range(4)])
+        W = W[W[:, -1] != inv[W[:, -2]]]
+    W = W[W[:, 0] != inv[W[:, -1]]]
+    pw = 4 ** np.arange(l - 1, -1, -1)
+    code = lambda A: A @ pw
+    c0 = code(W); cmin = c0.copy(); prim = np.ones(len(W), bool)
+    Wi = inv[W[:, ::-1]]
+    for k in range(l):
+        ck = code(np.roll(W, -k, axis=1)); cmin = np.minimum(cmin, np.minimum(ck, code(np.roll(Wi, -k, axis=1))))
+        if k: prim &= ck != c0
+    keep = prim & (c0 == cmin)
+    return W[keep][np.argsort(c0[keep])]
+
+
 def class_table(pt):
     """rows: primitive classes (mod rotation and inversion) up to LMAX; T[n] = sum over conjugates of u^{+-n} of tr c_w."""
-    K = pt.K; rows = []
+    K = pt.K; Phi = np.array(pt.Phi); Om = np.zeros((4, 4, K, K), complex)
+    for (f, l), M in pt.Om.items(): Om[f, l] = M
+    inv = np.array(INV); rows = []
     for l in range(1, LMAX + 1):
-        for u in cyc_reduced(l):
-            if is_power(u) or min(rotations(u) + rotations(winv(u))) != u: continue
-            T = np.zeros(LNMAX + 1, complex); nmax = LNMAX // l
-            for word in (u, winv(u)):
-                for r in rotations(word):
-                    M = np.eye(K, dtype=complex)
-                    for x in r: M = M @ pt.Phi[x]
-                    Om = pt.Om[(r[0], r[-1])]; Mn = M
-                    for k in range(1, nmax + 1):
-                        if k > 1: Mn = Mn @ M
-                        T[k] += np.trace(Om @ Mn)
-            rows.append(T)
-    return np.array(rows)
+        U = class_words(l); nmax = LNMAX // l
+        T = np.zeros((len(U), LNMAX + 1), complex)
+        for Wd in (U, inv[U[:, ::-1]]):
+            for k in range(l):
+                R = np.roll(Wd, -k, axis=1)
+                M = Phi[R[:, 0]]
+                for j in range(1, l): M = M @ Phi[R[:, j]]
+                O = Om[R[:, 0], R[:, -1]]; Mn = M
+                for n in range(1, nmax + 1):
+                    if n > 1: Mn = Mn @ M
+                    T[:, n] += np.einsum('cij,cji->c', O, Mn)
+        rows.append(T)
+    return np.concatenate(rows)
 
 
 def main():

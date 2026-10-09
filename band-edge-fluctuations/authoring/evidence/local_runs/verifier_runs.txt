@@ -1,8 +1,8 @@
-== oracle (solution/solve.sh in bef-env, --network none, 2 CPUs, 4 GB; wall 117 s)
+== oracle (solution/solve.sh in bef-env, --network none, 2 CPUs, 4 GB; wall 42 s)
 PASSED tests/test_answer.py::test_value[third_cumulant]
-============================== 5 passed in 0.09s ===============================
+============================== 5 passed in 0.10s ===============================
 reward=1
-{"z_inf":{"reported":0.14769366690671853,"relative_error":1.2553500024447582e-13},"mean_correction":{"reported":0.11794574705746319,"relative_error":1.9571439692309423e-09},"variance":{"reported":35.83466422042415,"relative_error":6.476367729747475e-10},"third_cumulant":{"reported":1.5662938893892515,"relative_error":2.4876490567473895e-07}}
+{"z_inf":{"reported":0.14769366690671853,"relative_error":1.2553500024447582e-13},"mean_correction":{"reported":0.11794574705746319,"relative_error":1.9571439692309423e-09},"variance":{"reported":35.83466422042415,"relative_error":6.476367729747475e-10},"third_cumulant":{"reported":1.5662938893892513,"relative_error":2.4876490581650325e-07}}
 == nop (empty output dir)
 ERROR tests/test_answer.py::test_value[third_cumulant] - FileNotFoundError: [...
 ============================== 5 errors in 0.04s ===============================

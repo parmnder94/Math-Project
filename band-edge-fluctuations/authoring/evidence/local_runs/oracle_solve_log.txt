@@ -2,7 +2,7 @@
   "z_inf": 0.14769366690671853,
   "mean_correction": 0.11794574705746319,
   "variance": 35.83466422042415,
-  "third_cumulant": 1.5662938893892515
+  "third_cumulant": 1.5662938893892513
 } 
-[112 s]
-wall 117 s
+[37 s]
+wall 42 s
