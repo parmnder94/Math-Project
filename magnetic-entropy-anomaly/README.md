@@ -62,6 +62,8 @@ The layer flux has symmetries: $q$ at $x = \pi$ equals $-q$ at $x = 0$. So $K = 
 
   An Euler–Maruyama scheme is about 1% high at every mass because it inflates the velocity variance.
 
+* **Independent derivations.** Two blind solver probes derived the layer reduction separately and obtained K = 0.083393 and 0.08339296. These agree with the truth to 5e-7 and 4e-9 (`authoring/evidence/probe_reports.md`).
+
 **Rebuild.**
 
 * `python3 solution/solve.py` recomputes the answer.
