@@ -1,156 +1,196 @@
 {
   "archive": "congruence-conductor.zip",
-  "bytes": 333505,
-  "sha256": "34fe9a704d0484be29610d4d55f92b5121575784b439265162a862c89d7aa4d8",
-  "checks": [
-    {
-      "name": "static",
-      "exit_status": 0,
-      "seconds": 0.06523910699979751
+  "bytes": 339036,
+  "sha256": "243f6d0dee554150fa4ca3ffcbf78f956e0289bc4b4cbdef9d852e4588287c7a",
+  "status": "passed targeted release validation",
+  "scope": "Explicit final-stage artifact-directory creation; all mathematical and verifier sources unchanged.",
+  "fresh_extraction": {
+    "zip_crc_valid": true,
+    "manifest_files": 170,
+    "manifest_unchanged_after_checks": true,
+    "explicit_final_stage_output_creation": true,
+    "only_changed_task_payload": [
+      "tests/Dockerfile"
+    ],
+    "static_checks": 88
+  },
+  "container_check": {
+    "repair": "Standalone RUN mkdir -p /app/output in the final verifier stage",
+    "image": "sha256:895fe33ec3f6b668c67959b35d18db694a5084d496b694a319476e791d8a6c2b",
+    "build_exit_status": 0,
+    "upload_to_output_before_container_start": "passed",
+    "reference_reward": 1,
+    "container_exit_status": 0,
+    "verification_seconds": 17.424346102998243,
+    "ctrf": {
+      "tests": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "pending": 0,
+      "other": 0,
+      "start": 1791566048.3559206,
+      "stop": 1791566065.3649313
     },
-    {
-      "name": "public_Spec",
-      "exit_status": 0,
-      "seconds": 1.6976668089992017
-    },
-    {
-      "name": "public_QuotientSpec",
-      "exit_status": 0,
-      "seconds": 2.3009205629969074
-    },
-    {
-      "name": "public_Task",
-      "exit_status": 0,
-      "seconds": 1.1515823549998458
-    },
-    {
-      "name": "reference",
-      "exit_status": 0,
-      "seconds": 12.756160027001897
-    },
-    {
-      "name": "checker_compile",
-      "exit_status": 0,
-      "seconds": 0.4963942959984706
-    },
-    {
-      "name": "checker_link",
-      "exit_status": 0,
-      "seconds": 1.2175075330014806
-    },
-    {
-      "name": "kernel_replay",
-      "exit_status": 0,
-      "seconds": 1.0546469519977109
-    },
-    {
-      "name": "independent_algebra",
-      "exit_status": 0,
-      "seconds": 2.657410362000519
-    },
-    {
-      "name": "containers",
-      "exit_status": 0,
-      "seconds": 74.00170629100103
-    }
-  ],
-  "manifest_files_before": 161,
-  "manifest_files_after": 161,
-  "extracted_sources_unchanged": true,
-  "status": "passed technical release validation",
-  "containers": {
-    "all_expected_outcomes": true,
-    "runner": "separate Docker containers; not an official platform run",
-    "images": {
-      "agent": "sha256:620b94ebbad537b9e8fad23a04759741ce74a9df22c4c767a7574dcd5526366a",
-      "verifier": "sha256:35da830695a782a8ad5d902c2735d81d6ac3cda85f0e5de0850b39a3fc2f8c98"
-    },
-    "builds": [
+    "network": "none",
+    "cpus": 2,
+    "memory_mb": 4096,
+    "scope": "Targeted Dockerfile packaging repair; mathematical statements, reference source and verifier code unchanged. Earlier controls remain historical evidence for that unchanged code."
+  },
+  "previous_full_validation": {
+    "archive": "congruence-conductor.zip",
+    "bytes": 333505,
+    "sha256": "34fe9a704d0484be29610d4d55f92b5121575784b439265162a862c89d7aa4d8",
+    "checks": [
       {
-        "flavor": "agent",
-        "seconds": 0.21969527900000685,
-        "command": [
-          "docker",
-          "build",
-          "--network",
-          "none",
-          "--progress",
-          "plain",
-          "--tag",
-          "task-conductor-agent:local",
-          "--build-arg",
-          "TOOLCHAIN_IMAGE=task-conductor-toolchain:validated",
-          "/workspace/conductor-release-extracted/environment"
-        ],
-        "exit_status": 0
+        "name": "static",
+        "exit_status": 0,
+        "seconds": 0.06523910699979751
       },
       {
-        "flavor": "verifier",
-        "seconds": 0.21891769499779912,
-        "command": [
-          "docker",
-          "build",
-          "--network",
-          "none",
-          "--progress",
-          "plain",
-          "--tag",
-          "task-conductor-verifier:local",
-          "--build-arg",
-          "TOOLCHAIN_IMAGE=task-conductor-toolchain:validated",
-          "/workspace/conductor-release-extracted/tests"
-        ],
-        "exit_status": 0
+        "name": "public_Spec",
+        "exit_status": 0,
+        "seconds": 1.6976668089992017
+      },
+      {
+        "name": "public_QuotientSpec",
+        "exit_status": 0,
+        "seconds": 2.3009205629969074
+      },
+      {
+        "name": "public_Task",
+        "exit_status": 0,
+        "seconds": 1.1515823549998458
+      },
+      {
+        "name": "reference",
+        "exit_status": 0,
+        "seconds": 12.756160027001897
+      },
+      {
+        "name": "checker_compile",
+        "exit_status": 0,
+        "seconds": 0.4963942959984706
+      },
+      {
+        "name": "checker_link",
+        "exit_status": 0,
+        "seconds": 1.2175075330014806
+      },
+      {
+        "name": "kernel_replay",
+        "exit_status": 0,
+        "seconds": 1.0546469519977109
+      },
+      {
+        "name": "independent_algebra",
+        "exit_status": 0,
+        "seconds": 2.657410362000519
+      },
+      {
+        "name": "containers",
+        "exit_status": 0,
+        "seconds": 74.00170629100103
       }
     ],
-    "reused_toolchain_image": "task-conductor-toolchain:validated",
-    "public_image_file_hashes": {
-      "/app/data/README.md": "3c8250591b84544f34296257c7ad28191f35e06fe2bc780be27151393cca8eba",
-      "/app/data/Task.lean": "78111a6a8271bd78701495e5cdf88189f46b449997346a858c290a8b20af5aa9",
-      "/app/data/Spec.lean": "cd5dcac260448d7f7c24bf3a64a298649c96896d1e335a62f89ce83203a44eca",
-      "/app/data/QuotientSpec.lean": "8f827c35a3cb7b937069a2e6e3b7f100740dff6d2295aa1e74bb35b45257ee59"
-    },
-    "solver_seconds": 13.596163930997136,
-    "records": [
-      {
-        "case": "reference",
-        "reward": 1,
-        "exit_status": 0,
-        "seconds": 20.815799795000203,
-        "network": "none",
-        "cpus": 2,
-        "memory_mb": 4096,
-        "ctrf": {
-          "tests": 1,
-          "passed": 1,
-          "failed": 0,
-          "skipped": 0,
-          "pending": 0,
-          "other": 0,
-          "start": 1791565435.6926208,
-          "stop": 1791565456.0389144
-        }
+    "manifest_files_before": 161,
+    "manifest_files_after": 161,
+    "extracted_sources_unchanged": true,
+    "status": "passed technical release validation",
+    "containers": {
+      "all_expected_outcomes": true,
+      "runner": "separate Docker containers; not an official platform run",
+      "images": {
+        "agent": "sha256:620b94ebbad537b9e8fad23a04759741ce74a9df22c4c767a7574dcd5526366a",
+        "verifier": "sha256:35da830695a782a8ad5d902c2735d81d6ac3cda85f0e5de0850b39a3fc2f8c98"
       },
-      {
-        "case": "nop",
-        "reward": 0,
-        "exit_status": 1,
-        "seconds": 0.4355991369993717,
-        "network": "none",
-        "cpus": 2,
-        "memory_mb": 4096,
-        "ctrf": {
-          "tests": 1,
-          "passed": 0,
-          "failed": 1,
-          "skipped": 0,
-          "pending": 0,
-          "other": 0,
-          "start": 1791565466.2071834,
-          "stop": 1791565466.2353108
+      "builds": [
+        {
+          "flavor": "agent",
+          "seconds": 0.21969527900000685,
+          "command": [
+            "docker",
+            "build",
+            "--network",
+            "none",
+            "--progress",
+            "plain",
+            "--tag",
+            "task-conductor-agent:local",
+            "--build-arg",
+            "TOOLCHAIN_IMAGE=task-conductor-toolchain:validated",
+            "/workspace/conductor-release-extracted/environment"
+          ],
+          "exit_status": 0
+        },
+        {
+          "flavor": "verifier",
+          "seconds": 0.21891769499779912,
+          "command": [
+            "docker",
+            "build",
+            "--network",
+            "none",
+            "--progress",
+            "plain",
+            "--tag",
+            "task-conductor-verifier:local",
+            "--build-arg",
+            "TOOLCHAIN_IMAGE=task-conductor-toolchain:validated",
+            "/workspace/conductor-release-extracted/tests"
+          ],
+          "exit_status": 0
         }
-      }
-    ]
-  },
-  "scope": "Local technical release validation. Official quality approval and frontier-model difficulty are unmeasured."
+      ],
+      "reused_toolchain_image": "task-conductor-toolchain:validated",
+      "public_image_file_hashes": {
+        "/app/data/README.md": "3c8250591b84544f34296257c7ad28191f35e06fe2bc780be27151393cca8eba",
+        "/app/data/Task.lean": "78111a6a8271bd78701495e5cdf88189f46b449997346a858c290a8b20af5aa9",
+        "/app/data/Spec.lean": "cd5dcac260448d7f7c24bf3a64a298649c96896d1e335a62f89ce83203a44eca",
+        "/app/data/QuotientSpec.lean": "8f827c35a3cb7b937069a2e6e3b7f100740dff6d2295aa1e74bb35b45257ee59"
+      },
+      "solver_seconds": 13.596163930997136,
+      "records": [
+        {
+          "case": "reference",
+          "reward": 1,
+          "exit_status": 0,
+          "seconds": 20.815799795000203,
+          "network": "none",
+          "cpus": 2,
+          "memory_mb": 4096,
+          "ctrf": {
+            "tests": 1,
+            "passed": 1,
+            "failed": 0,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1791565435.6926208,
+            "stop": 1791565456.0389144
+          }
+        },
+        {
+          "case": "nop",
+          "reward": 0,
+          "exit_status": 1,
+          "seconds": 0.4355991369993717,
+          "network": "none",
+          "cpus": 2,
+          "memory_mb": 4096,
+          "ctrf": {
+            "tests": 1,
+            "passed": 0,
+            "failed": 1,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1791565466.2071834,
+            "stop": 1791565466.2353108
+          }
+        }
+      ]
+    },
+    "scope": "Local technical release validation. Official quality approval and frontier-model difficulty are unmeasured."
+  }
 }
