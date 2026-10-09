@@ -230,6 +230,11 @@ def main():
     memo = {}
 
     def Pi(ns, signs):          # sum_kappa prod_i T^{(s_i)}(n_i);  T^{(-)} = conj T = T at zbar
+        # exact symmetries: the slots commute, and flipping every sign conjugates the sum
+        pairs = sorted(zip(ns, signs)); flip = sorted((k, '+' if c == '-' else '-') for k, c in pairs)
+        if flip < pairs: return np.conj(Pi(tuple(k for k, _ in flip), tuple(c for _, c in flip)))
+        if [k for k, _ in pairs] != list(ns) or [c for _, c in pairs] != list(signs):
+            return Pi(tuple(k for k, _ in pairs), tuple(c for _, c in pairs))
         key = (ns, signs)
         if key not in memo:
             if sum(ns) > EXACT:
@@ -251,9 +256,16 @@ def main():
 
     # T(h) = -Im T(z) for the Lorentzian
     m = sum(-np.imag(M_d(A, d) if d <= EXACT else np.sum(TA[:, [q * d for q in range(1, LNMAX // d + 1)]])) for d in range(2, LNMAX + 1)) - trce_h
-    v = sum(sum(divisors(gcd(n1, n2))) * ImIm(n1, n2) for n1 in range(1, LNMAX) for n2 in range(1, LNMAX - n1 + 1))
-    k = sum(sum(d * d for d in divisors(gcd(gcd(n1, n2), n3))) * -ImImIm((n1, n2, n3))
-            for n1 in range(1, LNMAX) for n2 in range(1, LNMAX - n1 + 1) for n3 in range(1, LNMAX - n1 - n2 + 1))
+    # Enumerated class sums via sigma(gcd) = sum_{d | gcd} d and J2(gcd) = sum_{d | gcd} d^2:
+    # sum_{n1,n2} sigma(gcd) IT_n1 IT_n2 = sum_d d S_d^2, with S_d = sum_q IT_{dq}; same for k with d^2 S_d^3.
+    S = [None] + [IT[:, d::d].sum(axis=1) for d in range(1, LNMAX + 1)]
+    small2 = [(a, b) for a in range(1, EXACT) for b in range(1, EXACT - a + 1)]
+    small3 = [(a, b, c) for a in range(1, EXACT) for b in range(1, EXACT - a + 1) for c in range(1, EXACT - a - b + 1)]
+    v = sum(d * float(np.sum(S[d] ** 2)) for d in range(1, LNMAX + 1))
+    v += sum(sum(divisors(gcd(a, b))) * (ImIm(a, b) - float(np.sum(IT[:, a] * IT[:, b]))) for a, b in small2)
+    k = -sum(d * d * float(np.sum(S[d] ** 3)) for d in range(1, LNMAX + 1))
+    k += sum(sum(d * d for d in divisors(gcd(gcd(a, b), c))) * -(ImImIm((a, b, c)) - float(np.sum(IT[:, a] * IT[:, b] * IT[:, c])))
+             for a, b, c in small3)
     ans = {"z_inf": trce_h / 2, "mean_correction": float(m), "variance": float(v), "third_cumulant": float(k)}
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w") as fh: json.dump(ans, fh, indent=2)
