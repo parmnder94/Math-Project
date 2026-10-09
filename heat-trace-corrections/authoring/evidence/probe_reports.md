@@ -50,4 +50,4 @@ Its relative errors against the truth are 3.4e-11 (m1) and 6.0e-11 (v1); z_inf, 
 
 Its naive Poisson-cycle variance formula failed its own checks, and it did not find the quotient expansion for the 1/N terms.
 
-**Calibration consequence.** Both model tiers solved this version within the 9000 s budget, in about an hour each. The agent timeout in `task.toml` is the remaining calibration lever. The shipped budget is the 3600 s minimum: the frontier probe needed about 58 min for its first correct answer file, the lighter probe about 68 min, and the small model gave up. Every probe was told 9000 s, so these times were not taken under time pressure.
+**Calibration consequence.** Both model tiers solved this version within the 9000 s budget, in about an hour each. The agent budget is the platform floor of 9000 s, the same budget all probes were given.
