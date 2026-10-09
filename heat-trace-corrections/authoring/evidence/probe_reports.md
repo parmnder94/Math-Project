@@ -8,7 +8,7 @@ Each probe ran as an autonomous agent in its own empty directory. It saw only th
 |---|---|---|
 | 1 | gap-opening field of a spin-orbit triangle network (cusp of the limit spectrum) | frontier: solved in ~27 min |
 | 2 | O(1) heat-trace statistics of the triangle network | frontier: solved in ~12 min |
-| 3 | O(1) band-edge Lorentzian statistics (z, m, v, k), exact transfer resummation required | frontier: solved in ~36 min; the platform's lighter screening pass also solved it too often |
+| 3 | O(1) band-edge Lorentzian statistics (z, m, v, k), exact transfer resummation required | frontier: solved in ~36 min; the platform's lighter screening pass also solved it too often; small model (Haiku class): not solved (only z exact, the rest from Monte Carlo) |
 | 4 | the same on square-plaquette networks (c-bond to στσ⁻¹, 6×6 linearization required) | lighter: solved in ~31 min; frontier: solved in ~45 min |
 
 Each of these needed known theorems: strong convergence, linearization, Nica and Linial–Puder, and transfer operators. That made them reachable by applying the literature. The shipped version asks for the 1/N coefficients, for which no off-the-shelf formula exists.
