@@ -1,0 +1,235 @@
+{
+  "archive": "elliptic-endomorphism.zip",
+  "archive_sha256": "cefbc40ed3c61fea849f951bd13089be0c80af7aab31cef83896803702dfebd4",
+  "archive_bytes": 282357,
+  "checks": [
+    {
+      "name": "static",
+      "exit_status": 0,
+      "seconds": 0.042489924000619794,
+      "command": [
+        "/workspace/task-tools/bin/python",
+        "-B",
+        "authoring/evidence/static_validate.py",
+        "--output",
+        "/workspace/deliverables/elliptic-endomorphism-final-validation/static_results.json"
+      ]
+    },
+    {
+      "name": "reference",
+      "exit_status": 0,
+      "seconds": 10.47272550499838,
+      "command": [
+        "/workspace/task-tools/bin/python",
+        "-B",
+        "solution/solve.py",
+        "--data",
+        "environment/data/jacobian.json",
+        "--output",
+        "/workspace/deliverables/elliptic-endomorphism-final-validation/reference.json"
+      ]
+    },
+    {
+      "name": "independent",
+      "exit_status": 0,
+      "seconds": 3.748770599000636,
+      "command": [
+        "/workspace/task-tools/bin/python",
+        "-B",
+        "authoring/evidence/independent.py",
+        "--data",
+        "environment/data/jacobian.json",
+        "--output",
+        "/workspace/deliverables/elliptic-endomorphism-final-validation/independent.json"
+      ]
+    },
+    {
+      "name": "grade_reference",
+      "exit_status": 0,
+      "seconds": 0.08580714700110548,
+      "command": [
+        "/workspace/task-tools/bin/python",
+        "-B",
+        "tests/check_submission.py",
+        "/workspace/deliverables/elliptic-endomorphism-final-validation/reference.json"
+      ]
+    },
+    {
+      "name": "grade_independent",
+      "exit_status": 0,
+      "seconds": 0.0996927650012367,
+      "command": [
+        "/workspace/task-tools/bin/python",
+        "-B",
+        "tests/check_submission.py",
+        "/workspace/deliverables/elliptic-endomorphism-final-validation/independent.json"
+      ]
+    },
+    {
+      "name": "controls",
+      "exit_status": 0,
+      "seconds": 0.23110235599961015,
+      "command": [
+        "/workspace/task-tools/bin/python",
+        "-B",
+        "authoring/evidence/validate.py",
+        "--output",
+        "/workspace/deliverables/elliptic-endomorphism-final-validation/validation_results.json"
+      ]
+    },
+    {
+      "name": "containers",
+      "exit_status": 0,
+      "seconds": 36.93352146599864,
+      "command": [
+        "/workspace/task-tools/bin/python",
+        "-B",
+        "authoring/evidence/container_validate.py",
+        "--evidence",
+        "/workspace/deliverables/elliptic-endomorphism-final-validation/docker",
+        "--repetitions",
+        "1"
+      ]
+    }
+  ],
+  "status": "passed technical release validation",
+  "manifest_files_checked_before": 118,
+  "manifest_files_checked_after": 118,
+  "all_extracted_files_unchanged": true,
+  "controls": 74,
+  "docker_records": [
+    {
+      "flavor": "oracle",
+      "attempt": 1,
+      "reward": 1,
+      "verifier_exit_status": 0,
+      "network_mode": "none",
+      "agent_network_mode": "none",
+      "agent_image_id": "sha256:fa662aec5fb0ab3fe7691757f3b915566530566b1d0e06dec322c43026c92624",
+      "verifier_image_id": "sha256:731f98033a7b60d8e08abc67ceac49b6ebe383bf394c53fa7377b82ba5786123",
+      "elapsed_seconds": 16.03537170400159,
+      "ctrf": {
+        "tests": 1,
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "pending": 0,
+        "other": 0,
+        "start": 1791554751.255931,
+        "stop": 1791554751.299568
+      },
+      "artifact_sha256": "6f00350f765d63bb6042fcd80ea1d322bf5e8c4951c314e365f1dd7516ef6bfa"
+    },
+    {
+      "flavor": "independent",
+      "attempt": 1,
+      "reward": 1,
+      "verifier_exit_status": 0,
+      "network_mode": "none",
+      "agent_network_mode": "none",
+      "agent_image_id": "sha256:fa662aec5fb0ab3fe7691757f3b915566530566b1d0e06dec322c43026c92624",
+      "verifier_image_id": "sha256:731f98033a7b60d8e08abc67ceac49b6ebe383bf394c53fa7377b82ba5786123",
+      "elapsed_seconds": 10.308271619000152,
+      "ctrf": {
+        "tests": 1,
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "pending": 0,
+        "other": 0,
+        "start": 1791554761.537136,
+        "stop": 1791554761.6128862
+      },
+      "artifact_sha256": "c5f5e6742cb7b88ac3b4054cbdc00e7315b33e1f66c7a10380cc56f52f8fca9a"
+    },
+    {
+      "flavor": "nop",
+      "attempt": 1,
+      "reward": 0,
+      "verifier_exit_status": 1,
+      "network_mode": "none",
+      "agent_network_mode": null,
+      "agent_image_id": "sha256:fa662aec5fb0ab3fe7691757f3b915566530566b1d0e06dec322c43026c92624",
+      "verifier_image_id": "sha256:731f98033a7b60d8e08abc67ceac49b6ebe383bf394c53fa7377b82ba5786123",
+      "elapsed_seconds": 3.1235904749992187,
+      "ctrf": {
+        "tests": 1,
+        "passed": 0,
+        "failed": 1,
+        "skipped": 0,
+        "pending": 0,
+        "other": 0,
+        "start": 1791554764.619799,
+        "stop": 1791554764.6815703
+      },
+      "artifact_sha256": null
+    }
+  ],
+  "calibration": {
+    "requested_model": "Claude Opus 5-5, highest effort",
+    "requested_model_executed": false,
+    "requested_model_limitation": "No callable model endpoint, credentials or configured harness; the user confirmed none is available.",
+    "local_model": "Inherited Codex collaboration model; exact backend model revision and effort were not exposed in run metadata.",
+    "isolation": "Fresh conversation contexts with explicit task-specific file restrictions. These collaborative probes share a host workspace; they are not an official process-isolated model evaluation.",
+    "initial_contract": {
+      "attempts": 8,
+      "successes": 8,
+      "scope": "Previously delivered differential-centralizer task, prior to this redesign."
+    },
+    "first_redesign_pilot": {
+      "attempts": 2,
+      "successes": 2,
+      "changes": "Given elliptic map, integral gluing, rational/geometric algebras, local data at five and seven. No field-of-definition or inverse-map requirement."
+    },
+    "current_contract": {
+      "status": "completed",
+      "instruction_sha256": "b73a8c6912e5a84c4d190601356765eef086f883310d9620692c86fd9095ecb8",
+      "input_sha256": "2dcd1baaa7699c1e2ebfc1fd09da5fd79a6ff933533dd82f2535581f3b5adb3c",
+      "fresh_full_task_attempts": {
+        "attempts": 3,
+        "completed": 3,
+        "successes": 2,
+        "mathematical_failures": 1,
+        "infrastructure_failures_counted": 0,
+        "evidence": "calibration/final_fresh_results.json"
+      },
+      "continuations": {
+        "attempts": 5,
+        "completed": 5,
+        "successes": 5,
+        "scope": "Each solver retained its own frozen arithmetic solution and independently solved the integral-order extension. The combined artifact was graded against the full final contract. No solution hints were supplied.",
+        "evidence": "calibration/integral_continuation_results.json"
+      },
+      "difficulty_target_met": false,
+      "requested_model_target_assessed": false,
+      "combined_descriptive_count": {
+        "attempts": 8,
+        "successes": 7,
+        "not_eight_fresh_runs": true
+      },
+      "failure_analysis": "Fresh attempt 03 used an incorrect antilinear Hermitian operator, giving the wrong geometric integral order and conductor quotient. Correcting only integral_structure makes its artifact pass; this post-completion diagnostic is not counted as a solver success."
+    },
+    "official_quality_and_difficulty_gates_executed": false,
+    "arithmetic_redesign": {
+      "attempts": 6,
+      "successes": 6,
+      "status": "completed",
+      "instruction_sha256": "db6660702d8ffdd9529eac9aff1a99f967c8e0abc1bbea1c18c24889af2c0101",
+      "evidence": "calibration/arithmetic_results.json",
+      "target_met": false,
+      "scope": "Map reconstruction, minimal field of definition, wild reduction at three; before the integral-order extension."
+    },
+    "infrastructure_events": [
+      {
+        "attempt": "arithmetic 04",
+        "event": "Two execution calls temporarily returned exec-server transport disconnected.",
+        "resolution": "Retried successfully; the mathematical attempt completed and passed. Not counted as a failure."
+      },
+      {
+        "attempt": "integral continuation 05",
+        "event": "The first follow-up launch returned a thread-store rate-limit error (429).",
+        "resolution": "Launch was retried successfully; the mathematical attempt completed and passed. Not counted as a failure."
+      }
+    ]
+  }
+}
