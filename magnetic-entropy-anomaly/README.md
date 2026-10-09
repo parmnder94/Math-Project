@@ -1,54 +1,70 @@
 # magnetic-entropy-anomaly
 
-A charged Brownian particle moves on a torus with a temperature profile $T = 1 + \tfrac35\cos x$, a drag tensor $\Gamma(y)$ that rotates as $y$ changes, and a fixed perpendicular magnetic field. The task asks for the exact gap
+A charged Brownian particle moves on a torus with a rotating drag tensor $\Gamma(y)$ and a uniform magnetic field. The medium has a **temperature step**: $T = 2$ on the stripe $0 < x < \pi$ and $T = 1$ on $\pi < x < 2\pi$. The heat entropy flow $\dot S_m$ diverges like $m^{-1/2}$ as the mass goes to zero. The task asks for
 
-$$\Delta = \lim_{m\to0}\dot S_m - \mathcal I_0 = \frac{17}{420},$$
+$$K = \lim_{m\to0}\sqrt m\,\dot S_m = 0.08339296 .$$
 
-between the heat entropy flow into the environment in the small-mass limit and the time-reversal relative entropy rate of the limiting position process, with the field held fixed.
+The answer is graded at a relative error of $10^{-4}$.
 
 ## Difficulty
 
-**What makes it hard.** As the mass goes to zero, the position settles into a simpler overdamped diffusion. One would expect the heat released to equal how irreversible that limiting motion is. With a temperature gradient this is false: velocity fluctuations that the overdamped motion cannot see keep dissipating heat (the "entropy anomaly"). Computing the gap exactly takes three steps, each easy to get wrong:
+**What makes it hard.** For a smooth temperature profile the small-mass limit of the entropy flow is a standard calculation (Hilbert expansion, local Maxwellian, cubic Hermite sector). A temperature step breaks it:
 
-1. **The overdamped limit.** The rotating drag tensor and the magnetic field produce a noise-induced drift. The stationary density turns out to be uniform, but the stationary state still carries a circulating current, $\mathbf j = \rho_0 (J/3)\nabla T$.
-2. **The irreversibility of that limit.** Because of the hidden current, the fixed-field relative entropy rate is not zero: $\mathcal I_0 = 1/20$.
-3. **The heat flow as $m\to0$.** Its natural expression blows up like $1/\sqrt m$. Removing the singularity needs an exact rewriting and a Poisson equation for the fast velocity process in the third Hermite sector, where the magnetic field couples four cubic modes. The result is $\lim\dot S_m = 19/210$.
+* The local anomaly formula (density proportional to $|\nabla T|^2/T$) diverges.
+* The heat is exchanged in kinetic boundary layers of width $\sqrt m$ along the two lines where $T$ jumps.
 
-**Plausible shortcuts give wrong exact values** (`authoring/evidence/ablations.json`):
+Getting $K$ takes four steps:
 
-| shortcut | value obtained |
+1. **Bulk.** Show that the density is uniform in each stripe. Show that the exact momentum balance of the layer makes the pressure $\rho T$ continuous across the step, so $\rho T = P = 1/(3\pi^2)$.
+2. **Reduce the heat to the layers.** With no work done on the particle, the heat released at $x$ is $(\Gamma{:}\Pi - T\,\mathrm{tr}\Gamma\,\rho)/m$. An energy balance in the layer turns each line's contribution into the energy flux $q = \int u_1|u|^2 p\,du$ at the step. Each line contributes $\int dy\,(q/2)(1/T_{\rm right} - 1/T_{\rm left})$.
+3. **Solve the layer.** Solve the half-space (transmission) kinetic problem with a 2D velocity, the matrix drag in its rotated frame and the Lorentz force. Do this at every angle of the drag frame, then average along the lines.
+4. **Precision.** The layer solution is singular at zero normal velocity, so velocity expansions converge only algebraically. Reaching $10^{-4}$ needs a controlled extrapolation.
+
+**Shortcuts give wrong values or none** (`authoring/evidence/ablations.json`):
+
+| shortcut | value |
 |---|---|
-| uniform density taken as reversible (or the field flipped in the reversal) | 19/210 |
-| no anomaly: heat rate equals the overdamped irreversibility | 0 |
-| magnetic field dropped from the fast velocity process | 19/400 |
-| drag replaced by its isotropic average $\tfrac32 I$ | 724/16575 |
+| smooth-profile anomaly formula, or overdamped heat count | no finite value |
+| one-dimensional layer (transverse velocity ignored) | 0.05414 (35% off) |
+| drag frame frozen at $y = 0$ | 0.08592 (3% off) |
+| Euler–Maruyama simulation at small mass | about 1% high |
 
-Simulation cannot replace the derivation. The answer is an exact fraction, and Monte Carlo of the full dynamics reaches only about 1% even at small mass.
-
-**Who does this in practice.** This is the work of a researcher in stochastic thermodynamics or applied probability who studies small-mass limits of Langevin equations. For such a specialist it is about a day of careful derivation.
+**Who does this in practice.** This is the work of a researcher in kinetic theory or stochastic thermodynamics who handles boundary layers of Fokker–Planck equations (Milne-type problems). It is several days of analysis and careful numerics.
 
 ## Reference solution
 
-`solution/solve.py` repeats the derivation in exact SymPy arithmetic and runs in about a second:
+`solution/solve.py` uses NumPy and SciPy and runs in about a minute on 2 cores. It does the following:
 
-1. **Fast velocity process.** With $\mathbf u = \sqrt m\,\mathbf V$, the velocity at fixed position is an Ornstein–Uhlenbeck process with drift matrix $\Gamma - J$ and Maxwellian of variance $T$.
-2. **Limiting diffusion.** The mobility is $M = (\Gamma - J)^{-1} = [R\,\mathrm{diag}(2,1)R^{\mathsf T} + J]/3$. The density is uniform and the current is $\rho_0 (J/3)\nabla T$. Then $\mathcal I_0 = \int \mathbf j^{\mathsf T}D^{-1}\mathbf j/\rho_0 = I_T/4$, with $I_T = \langle T'^2/T\rangle = 1/5$.
-3. **Heat rate.** The exact identity $\dot S_m = -\langle S\rangle/(2\sqrt m)$ holds with $S = (\nabla T\cdot\mathbf u)(|\mathbf u|^2 - 4T)/T^2$. Solving $\mathcal L_0\chi = S$ in the cubic Hermite sector of the local drag frame (a 4×4 system coupled by the field) gives $\lim\dot S_m = -\langle\chi S\rangle/4 = (19/42) I_T = 19/210$.
+* **Layer equation.** It writes the layer equation $u_1\partial_\xi p = \nabla_u\cdot[(\Gamma - J)u\,p + T(\xi)\Gamma\nabla_u p]$ in a tensor Hermite basis at reference temperature $3/2$.
+* **Bounded solutions.** It takes the bounded solutions on each side from ordered real Schur forms (stable invariant subspaces) plus the Maxwellian.
+* **Matching.** It imposes continuity at the step.
+* **Energy flux.** It reads off $q$.
+
+The layer flux has symmetries: $q$ at $x = \pi$ equals $-q$ at $x = 0$. So $K = -\langle q_a\rangle_\theta/(3\pi)$, averaged over the frame angle with 8 points.
 
 ## Verification
 
-`tests/test_answer.py` reads `delta` from `/app/output/answer.json`. It accepts an exact fraction equal to $17/420$, or a decimal within $10^{-12}$ of it. The verifier never runs agent code.
+`tests/test_answer.py` reads `K` from `/app/output/answer.json`. It requires a relative error of at most $10^{-4}$ and never runs agent code.
 
-**Ground truth: how it is produced.** The value was derived analytically. The author's step-by-step solution follows the small-mass framework of Birrell, *Entropy Anomaly in Langevin–Kramers Dynamics with a Temperature Gradient, Matrix Drag, and Magnetic Field*, J. Stat. Phys. (2018), doi:10.1007/s10955-018-2162-2. `solution/solve.py` recomputes it in exact arithmetic, so the truth and the reference share one derivation.
+**Ground truth: how it is produced.** `tests/truth.json` comes from the reference solver itself, run at larger normal Hermite orders. `authoring/provenance/truth.py` runs K1 = 120 and 160 with Richardson extrapolation at the measured exponent 2.87. The convergence record is in `authoring/evidence/layer_convergence.json`.
 
-**Independent checks:**
+* At one angle, K1 = 40 to 400 converges like $K_1^{-2.9}$.
+* The 120/160 extrapolation agrees with the 240/320/400 sequence to 6e-8.
+* The transverse order is converged to 1e-14, and 8 angles are exact to 1e-10.
 
-* **Hermite operator.** The 4×4 matrix of $-\mathcal L_0$ on the cubic sector was re-extracted numerically from the generator at random frame angles and temperatures (residual about 1e-14). Every inverse, contraction and integral was rechecked in SymPy.
-* **Simulation.** A Monte Carlo simulation of the full underdamped dynamics agrees with the predicted heat-rate limit $19/210 \approx 0.0905$. At $m = 0.04$, refining the time step and extrapolating it to zero gives 0.0905. At a fixed step the values for $m = 0.01$–$0.04$ coincide, so the remaining mass dependence is below the statistical error of about 0.001 (`authoring/evidence/mc_summary.json`, script `authoring/provenance/mc.py`).
+**Independent checks** (`authoring/evidence/mc_summary.json`):
+
+* **Consistency of the layer solution.** The matching residual with $\rho T = 1$ imposed on both sides is about 1e-15. The two symmetries hold to 1e-14.
+* **Finite-mass solution (1D model).** The same step without field or drag rotation was solved exactly at finite mass on the circle by Hermite modes. It gives $\sqrt m\,\dot S_m$ = 0.054438, 0.054290 and 0.054216 at m = 0.01, 0.0025 and 0.000625. That converges like $\sqrt m$ to the layer constant 0.054142.
+* **Simulation.** An exact Ornstein–Uhlenbeck-step Monte Carlo gives the following:
+  * In 1D at m = 0.0025: 0.05438 ± 0.00036, against 0.05429.
+  * In 2D at m = 0.0025: 0.08389 ± 0.00083, against 0.08339 plus a positive $O(\sqrt m)$ correction.
+
+  An Euler–Maruyama scheme is about 1% high at every mass because it inflates the velocity variance.
 
 **Rebuild.**
 
 * `python3 solution/solve.py` recomputes the answer.
-* `python3 authoring/evidence/ablate.py solution <out.json>` recomputes the shortcut values.
-* `python3 authoring/provenance/mc.py <m> <particles> <time> <seed>` re-runs the simulation.
-* `bash authoring/evidence/verifier_local_run.sh <dir>` re-runs the verifier image; oracle and nop runs are in `authoring/evidence/local_runs/`.
+* `python3 authoring/provenance/truth.py solution` regenerates the truth.
+* The scripts in `authoring/provenance/` re-run the checks: `circle1d.py`, `mc1d_ou.py`, `mc2d_ou.py` and `layer1d.py`.
+* `bash authoring/evidence/verifier_local_run.sh <dir>` re-runs the verifier image. Oracle and nop runs are in `authoring/evidence/local_runs/`.

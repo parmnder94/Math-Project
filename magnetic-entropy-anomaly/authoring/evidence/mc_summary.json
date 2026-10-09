@@ -1,8 +1,40 @@
 {
-  "target_lim_Sdot": "19/210 = 0.090476",
-  "estimator": "S_dot_m = -<S>/(2 sqrt m), S = (grad T . u)(|u|^2 - 4T)/T^2, Euler-Maruyama, 20000 particles; statistical error about 0.001",
-  "fixed_step_dt_eq_m_over_40": {"m=0.04": 0.09459, "m=0.02": 0.09480, "m=0.01": 0.09443},
-  "step_refinement_at_m_0.04": {"dt=m/20": 0.10026, "dt=m/40": 0.09459, "dt=m/80": 0.09190, "dt=m/160": 0.09115},
-  "richardson_dt_to_0_at_m_0.04": 0.0905,
-  "note": "At fixed dt/m the Euler bias is the same at every mass, so the fixed-step values sit about 4% high for all m; refining the step removes it and the extrapolated value agrees with 19/210 to within the statistical error. Mass dependence at m <= 0.04 is below the statistical error."
+  "estimator": "S_dot_m = -E[int d(m|V|^2/2)/T(X)] = time average of crossing terms (m|V|^2/2)(1/T_new - 1/T_old); no work is done on the particle",
+  "one_dimensional_check": {
+    "model": "same step, gamma = 1, no field",
+    "layer_prediction_K": 0.0541422,
+    "finite_m_moment_solution": {
+      "m=0.01": 0.0544376,
+      "m=0.0025": 0.0542898,
+      "m=0.000625": 0.0542163
+    },
+    "exact_OU_step_MC_m=0.0025": {
+      "dt=m/10": [
+        0.05366,
+        0.00035
+      ],
+      "dt=m/40": [
+        0.05438,
+        0.00036
+      ]
+    },
+    "Euler_MC": {
+      "m=0.01": 0.05505,
+      "m=0.0025": 0.05481,
+      "m=0.000625": 0.05493,
+      "note": "about 1% high at every mass: the Euler velocity variance is inflated by the scheme"
+    }
+  },
+  "two_dimensional_check": {
+    "layer_K": 0.0833929606,
+    "exact_OU_step_MC_m=0.0025_dt=m/40": [
+      0.08389,
+      0.00083
+    ],
+    "Euler_MC_m=0.01": {
+      "dt=m/50": 0.08702,
+      "dt=m/200": 0.0849
+    },
+    "note": "the finite-mass correction is positive and O(sqrt m), about +0.3% at m = 0.0025 in the 1D model"
+  }
 }

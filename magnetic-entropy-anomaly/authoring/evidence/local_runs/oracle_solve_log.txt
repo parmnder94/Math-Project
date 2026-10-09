@@ -1,2 +1,2 @@
-lim S_dot = 19/210, I0 = 1/20, Delta = 17/420
-exit=0 wall 8 s
+K(K1=40) = 0.083408932531, K(K1=80) = 0.083395284264, extrapolated K = 0.083393121528
+exit=0 wall 59 s
