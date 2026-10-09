@@ -4,5 +4,5 @@
   "variance": 35.83466422042415,
   "third_cumulant": 1.5662938893892513
 } 
-[37 s]
-wall 42 s
+[26 s]
+exit=0 wall 27 s

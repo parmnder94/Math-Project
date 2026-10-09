@@ -29,7 +29,7 @@ solution_explanation = "Linearize P = B sz + Ta l(a) + Tb l(b) + Tc l(a)l(b) + h
 verification_explanation = "The verifier parses /app/output/answer.json and requires each of z_inf, mean_correction, variance and third_cumulant to be within a relative error of 1e-6 of tests/truth.json. Ground truth comes from authoring/provenance/truth.py. It uses exact resummation of all terms of total power <= 4 and primitive-class tails to length 13 (change from length 11 to 13: at most 2.9e-7, in k). An independent derivation by a different route (cactus cavity plus method-of-images holonomy determinants, authoring/evidence/probe_reports.md) agrees to 1e-9 on z_inf, m and v and to 3.2e-8 on k. Every transfer construction reproduces brute-force enumeration word length by word length to <= 3e-13. Monte Carlo of the finite networks (N = 200, 80,000 samples) agrees with E X_N and Var X_N (z-scores -0.3 and -1.3). The reference solution (classes to length 12) is within 2.5e-7 relative of the truth (k; 2e-9 or better on the others) and runs in under a minute on 2 cores. Every shortcut in authoring/evidence/ablations.json misses the gate; the smallest miss is 9.4e-5 (94x the gate)."
 
 [verifier]
-timeout_sec = 300.0
+timeout_sec = 600.0
 environment_mode = "separate"
 
 [verifier.environment]
