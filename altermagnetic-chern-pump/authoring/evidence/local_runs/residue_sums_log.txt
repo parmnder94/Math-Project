@@ -1,0 +1,12 @@
+min|d5| at zeros 0.29999999999999644 D_l(north) -37 signed sum/2 -37.0
+detL 2
+W0 -8 WA -219 WB -255 WAB -113
+(0, 0) (-648+0j) (imag in units of sqrt3)
+(0, 1) (-58.5+13.5j) (imag in units of sqrt3)
+(0, 2) (-58.5-13.5j) (imag in units of sqrt3)
+(1, 0) (-4.5+31.5j) (imag in units of sqrt3)
+(1, 1) (-40.5-67.5j) (imag in units of sqrt3)
+(1, 2) (-81+27j) (imag in units of sqrt3)
+(2, 0) (-4.5-31.5j) (imag in units of sqrt3)
+(2, 1) (-81-27j) (imag in units of sqrt3)
+(2, 2) (-40.5+67.5j) (imag in units of sqrt3)

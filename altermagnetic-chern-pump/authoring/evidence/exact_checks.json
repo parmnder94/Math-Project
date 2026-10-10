@@ -1,0 +1,20 @@
+{
+ "gap": {
+  "bracket values 1/5 + Re Z1 + 3/5 Re Z2 at zeros of d_1..d_4": ["9/5", "9/10", "3/10", "-3/5"],
+  "min |d_5| over the 6^4 zeros (exact, solution/solve.py)": "3/10"
+ },
+ "character sums (exact, solution/solve.py; floats in local_runs/residue_sums_log.txt)": {
+  "W0": -8, "WA": -219, "WB": -255, "WAB": -113,
+  "U_rs (re, im/sqrt3)": {
+   "00": [-648, 0], "01": [-58.5, 13.5], "02": [-58.5, -13.5], "10": [-4.5, 31.5], "20": [-4.5, -31.5],
+   "11": [-40.5, -67.5], "22": [-40.5, 67.5], "12": [-81, 27], "21": [-81, -27]
+  }
+ },
+ "degree on the l-torus": {
+  "north pole, character-sum route": -37,
+  "north pole, direct exact zero count from the instruction's definitions": -37,
+  "regular values +e1,-e1,+e2,-e2,+e3,-e3,+e4,-e4 (1D root finding, authoring/provenance/regular_values.py)": [-37, -37, -37, -37, -37, -37, -37, -37]
+ },
+ "covering x -> l": {"det L": 2, "orientation": "preserving"},
+ "C2": -74
+}
