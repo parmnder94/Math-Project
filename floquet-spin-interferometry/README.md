@@ -1,6 +1,6 @@
 # floquet-spin-interferometry
 
-A spin-3/2 is driven by three slow, frame-rotated, high-frequency pulses whose Hamiltonians contain counterterms (a_N, b_N and a gap shift) chosen so that every Floquet coupling below eighth order cancels. A control qubit runs the pulse train forward in one arm and time-reversed in the other. The task asks for the exact N → ∞ probability of measuring |−⟩ on the control:
+A spin-3/2 qudit is used as a holonomic gate built from a calibrated multiphoton transition. The |±3/2⟩ and |±1/2⟩ manifolds are two drive photons apart. An AC-Stark compensation (a_N), a second-harmonic tone (b_N) and a 1/T_N gap correction cancel every lower-order shift and coupling, so the first surviving coupling is of eighth order. The amplitude scales as ε_N ∝ T_N^(−1/8), which keeps that coupling's pulse area fixed as the pulses become adiabatic, while slow frames steer the quantization axis. A control qubit compares the three-pulse gate with its literal time reverse, an echo diagnostic of time-reversal asymmetry in the non-Abelian holonomy. The task asks for the exact N → ∞ probability of measuring |−⟩ on the control:
 
 $$p_- = \frac{1467167323933}{5157470703125} \approx 0.284474194500808 .$$
 

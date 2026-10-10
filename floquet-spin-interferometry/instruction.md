@@ -1,3 +1,5 @@
+This is a model of a calibrated multiphoton transition in a driven spin-3/2 qudit, used as a holonomic gate. The $|\pm3/2\rangle$ and $|\pm1/2\rangle$ manifolds are split by $2\Delta$, two photons of a drive at frequency $\Delta$. The drive's first harmonic couples them only through intermediate levels. The terms $a_N$ (an AC-Stark compensation) and $b_N$ (a second-harmonic tone), together with the $1/T_N$ shift of the gap, are calibrated so that every lower-order shift and coupling cancels: the first surviving coupling is of eighth order. The amplitude $\epsilon_N$ shrinks with the pulse length so that this coupling accumulates a fixed pulse area as $T_N$ grows, while the slow frames $R_r(s)$ and $D_r(s)$ steer the quantization axis during each pulse. A control qubit compares the pulse train with its literal time reverse, so the $|-\rangle_C$ probability measures how far the resulting non-Abelian holonomy is from being time-reversal symmetric.
+
 An isolated spin $j=3/2$ has $\hbar=1$, identity $I_4$, standard $J_x,J_y,J_z$, and $J_z|m\rangle=m|m\rangle$. Define
 
 $$
