@@ -1,0 +1,26 @@
+{
+  "reference": {
+    "p": "1467167323933/5157470703125",
+    "decimal": 0.28447419450080796
+  },
+  "endpoint frame D_r(1) set to the identity": {
+    "p": "3967634508388/5157470703125",
+    "decimal": 0.7692985063364378
+  },
+  "slow connection omitted": {
+    "p": "0",
+    "decimal": 0.0
+  },
+  "connection from R_r only (-pi K_r, D_r frame term dropped)": {
+    "p": null,
+    "decimal": 0.9059197279094596
+  },
+  "reversed pulse keeps the carrier phase (no phi -> -phi)": {
+    "p": "186657997221/206298828125",
+    "decimal": 0.9047942681860545
+  },
+  "carrier phases ignored in the effective coupling": {
+    "p": "8837889/9765625",
+    "decimal": 0.9049998336
+  }
+}

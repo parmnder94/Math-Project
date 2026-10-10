@@ -1,0 +1,10 @@
+{
+  "B_1..B_7": "identically zero",
+  "B_8": "(23539/2160)(Q-P) + (8447/540) X",
+  "X_phi_coefficient": "2/sqrt(3)",
+  "scalar_after_gap_correction": "-(gamma/2) I, gamma = 23539/(8447 sqrt3)",
+  "w": "(2223136055259 + 2895894695712 i)/5157470703125",
+  "p_minus": "1467167323933/5157470703125",
+  "gcd": 1,
+  "checks": "solution/solve.py (Hermite-free Feshbach recurrence + polynomial exponential) and authoring/provenance/floquet.py (independent recurrence implementation); exp(-i pi M) polynomial checked against numerical expm to 1e-12"
+}
