@@ -48,6 +48,6 @@ $$
 
 With $ \Delta $ fixed, what is the $ N\to\infty $ probability of measuring $ |-\rangle_C $? All angles use the principal real arctangent.
 
-Write `/app/output/answer.json` containing a JSON object with one field, `p`, holding the probability as a reduced fraction in a string of the form `"a/b"`. A decimal number is also accepted if it is within $ 10^{-12} $ of the exact value.
+Write `/app/output/answer.json` containing a JSON object with one field, `p`, holding the probability as a reduced fraction in a string of the form `"a/b"`.
 
 You have 9000 seconds to complete this task. Do not cheat by using online solutions or hints specific to this task.

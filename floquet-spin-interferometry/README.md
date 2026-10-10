@@ -45,7 +45,7 @@ Simulation cannot substitute for the derivation. Corrections decay like ε_N ∝
 
 ## Verification
 
-`tests/test_answer.py` reads `p` from `/app/output/answer.json`. It accepts an exact fraction equal to the truth, or a decimal within 10⁻¹². The verifier never runs agent code.
+`tests/test_answer.py` reads `p` from `/app/output/answer.json`. It accepts only the exact fraction (a string "a/b"); decimals are rejected. The verifier never runs agent code.
 
 **Ground truth: how it is produced.** The value comes from the derivation the task author supplied (golden solution, following Eckardt & Anisimovas, New J. Phys. 17, 093039 (2015)). `solution/solve.py` recomputes it in exact arithmetic, so the truth and the reference share one derivation.
 

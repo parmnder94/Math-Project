@@ -17,25 +17,18 @@ import pytest
 ANSWER = "/app/output/answer.json"
 HERE = os.path.dirname(os.path.abspath(__file__))
 TRUTH = Fraction(json.load(open(os.path.join(HERE, "truth.json")))["p"])
-FLOAT_TOL = 1e-12
 
 
 def _parse(v):
-    if isinstance(v, bool):
-        raise ValueError("boolean is not a number")
+    """Only an exact fraction is accepted: a string "a/b" (or an integer)."""
+    if isinstance(v, bool) or isinstance(v, float):
+        raise ValueError("the probability must be given as an exact fraction string \"a/b\"")
     if isinstance(v, int):
-        return Fraction(v), True
-    if isinstance(v, float):
-        if not math.isfinite(v):
-            raise ValueError("non-finite value")
-        return v, False
+        return Fraction(v)
     s = re.sub(r"\s+", "", str(v))
-    if re.fullmatch(r"[+-]?\d+(/[+-]?\d+)?", s):
-        return Fraction(s), True
-    x = float(s)
-    if not math.isfinite(x):
-        raise ValueError("non-finite value")
-    return x, False
+    if not re.fullmatch(r"[+-]?\d+(/[+-]?\d+)?", s):
+        raise ValueError(f"not an exact fraction: {v!r}")
+    return Fraction(s)
 
 
 @pytest.fixture(scope="module")
@@ -49,8 +42,4 @@ def answer():
 
 
 def test_probability(answer):
-    value, exact = answer
-    if exact:
-        assert value == TRUTH, f"p = {value} is not the exact value"
-    else:
-        assert abs(value - float(TRUTH)) <= FLOAT_TOL, f"p = {value} differs from the exact value"
+    assert answer == TRUTH, f"p = {answer} is not the exact value"

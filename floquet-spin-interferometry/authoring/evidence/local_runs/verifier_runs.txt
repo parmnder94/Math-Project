@@ -5,7 +5,7 @@ reward=1
 reward=0
 
 == dec {"p": 0.28447419450080796}
-reward=1
+reward=0
 
 == wrong {"p": "3967634508388/5157470703125"}
 reward=0
