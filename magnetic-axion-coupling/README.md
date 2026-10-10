@@ -52,13 +52,13 @@ It is graded at an absolute error of $10^{-8}$.
 **Independent checks** (`authoring/evidence/convergence.json`, `authoring/evidence/gauge_and_path_checks.json`):
 
 * **Gauge invariance.** A different, entangled spin–orbital trial gauge gives the same $\theta$ to $8\times10^{-11}$.
-* **Gauge-free route.** `authoring/provenance/path_second_chern.py` integrates the second Chern form, with $F_{ab}=iP[\partial_aP,\partial_bP]P$ and no gauge at all. Its path starts at the time-reversal-symmetric strong topological insulator ($\theta=\pi$) and switches on first the Néel mass and then the exchange, with a minimum gap of 0.050 eV along the way. It reproduces the truth within its discretization error, which confirms the value, the sign convention and the branch.
+* **Gauge-free route.** `authoring/provenance/path_second_chern.py` integrates the second Chern form, with $F_{ab}=iP[\partial_aP,\partial_bP]P$ and no gauge at all. Its path starts at the time-reversal-symmetric strong topological insulator ($\theta=\pi$) and switches on first the Néel mass and then the exchange, with a minimum gap of 0.050 eV along the way. With 28 Gauss nodes per segment on a $96^3$ grid it gives $1.885246644360$, within $1.6\times10^{-9}$ of the truth. This confirms the value, the sign convention and the branch.
 
 **Rebuild.**
 
 * `python3 solution/solve.py` recomputes the answer.
 * `python3 authoring/provenance/cs_stretched.py 96,128,160 0.8` reruns the convergence series.
-* `python3 authoring/provenance/path_second_chern.py 128 18 0.8` reruns the gauge-free check (about 40 min).
+* `python3 authoring/provenance/path_second_chern.py 96 28 0.8` reruns the gauge-free check (about 40 min).
 * `python3 authoring/provenance/gap_scan.py` recomputes the gap data.
 * `python3 authoring/evidence/ablate.py <out.json>` recomputes the shortcut values.
 * `bash authoring/evidence/verifier_local_run.sh <dir>` reruns the verifier image. Oracle and nop runs are in `authoring/evidence/local_runs/`.

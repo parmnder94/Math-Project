@@ -1,20 +1,46 @@
 {
  "truth": 1.885246645979,
  "chern_simons_stretched (cs_stretched.py, tau_y trial)": {
-  "c=0.8": {"48": 1.885281738719, "64": 1.885249258102, "96": 1.885246659483, "128": 1.885246646038, "160": 1.885246645979},
-  "c=0.9": {"96": 1.885246620504, "128": 1.885246645547, "160": 1.885246645974}
+  "c=0.8": {
+   "48": 1.885281738719,
+   "64": 1.885249258102,
+   "96": 1.885246659483,
+   "128": 1.885246646038,
+   "160": 1.885246645979
+  },
+  "c=0.9": {
+   "96": 1.885246620504,
+   "128": 1.885246645547,
+   "160": 1.885246645974
+  }
  },
- "chern_simons_uniform (c=0)": {"64": 1.887124540845, "96": 1.885346598340, "128": 1.885247816693, "160": 1.885246331800},
- "entangled trial gauge, 128^3, c=0.8": 1.885246646060,
+ "chern_simons_uniform (c=0)": {
+  "64": 1.887124540845,
+  "96": 1.88534659834,
+  "128": 1.885247816693,
+  "160": 1.8852463318
+ },
+ "entangled trial gauge, 128^3, c=0.8": 1.88524664606,
  "second_chern_path (path_second_chern.py, c=0.8; Gauss nodes per segment)": {
   "N=48, 10 nodes": 1.885264251693,
   "N=64, 10 nodes": 1.885265014472,
   "N=64, 20 nodes": 1.885246451609,
-  "N=96, 14 nodes": 1.885246338819
+  "N=96, 14 nodes": 1.885246338819,
+  "N=96, 28 nodes": 1.88524664436
  },
  "path integrand k-convergence at fixed lambda (dtheta/du)": {
-  "segment 2, u=0.9": {"48": -0.280800533584, "64": -0.280890586377, "96": -0.280899052149, "128": -0.280899069007},
-  "segment 1, u=0.1": {"48": -0.881049358867, "64": -0.881049362268, "96": -0.881049362271, "128": -0.881049362271}
+  "segment 2, u=0.9": {
+   "48": -0.280800533584,
+   "64": -0.280890586377,
+   "96": -0.280899052149,
+   "128": -0.280899069007
+  },
+  "segment 1, u=0.1": {
+   "48": -0.881049358867,
+   "64": -0.881049362268,
+   "96": -0.881049362271,
+   "128": -0.881049362271
+  }
  },
- "note": "The gauge-free path route is limited by its lambda quadrature (10 -> 20 nodes moves it by 1.9e-5); at 14-20 nodes it agrees with the truth to 2e-7 to 3e-7, independently confirming value, sign and branch. Higher-node runs are appended when finished."
+ "note": "The gauge-free path route is limited mainly by its lambda quadrature (10 -> 20 nodes moves it by 1.9e-5). With 28 nodes per segment at N=96 it agrees with the truth to 1.6e-9, independently confirming value, sign convention and branch."
 }
