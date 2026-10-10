@@ -1,4 +1,5 @@
-"""Values produced by plausible shortcuts. usage: python3 ablate.py <out.json>"""
+"""Values produced by physically wrong shortcuts (not discretization error; see convergence.json for that).
+usage: python3 ablate.py <out.json>"""
 import json
 import os
 import sys
@@ -24,8 +25,6 @@ def main():
     out["exchange dropped (Neel mass only, J1 = J2 = 0)"] = wrap(theta_cs(dict(PARAMS, J1=0.0, J2=0.0), 128, 0.8)[0])
     out["orbital dependence of the exchange dropped (J1 = J2 = average)"] = (
         "gapless: min direct gap %.1e, theta undefined" % min_gap(dict(PARAMS, J1=0.075, J2=0.075))[0])
-    for n in (64, 96, 128):
-        out[f"uniform {n}^3 grid, same smooth gauge"] = wrap(theta_cs(PARAMS, n, 0.0)[0])
     json.dump(out, open(sys.argv[1], "w"), indent=1)
     print(json.dumps(out, indent=1))
 

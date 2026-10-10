@@ -1,0 +1,8 @@
+{
+ "point": "Neel-only model (J1 = J2 = 0), where H = sum_a d_a Gamma_a has the Clifford form",
+ "Chern-Simons code (cs_stretched.py, 128^3 stretched)": 2.3452302019,
+ "closed formula of Li, Wang, Qi and Zhang, Nat. Phys. 6, 284 (2010), uniform 128^3 midpoint grid": -2.3452293399,
+ "agreement in magnitude": 8.6e-7,
+ "sign": "The formula's overall sign depends on the orientation convention of its Gamma matrices; the task's sign follows the Chern-Simons definition written in the instruction, which cs_stretched.py and solution/solve.py implement directly.",
+ "script": "authoring/provenance/clifford_formula_check.py (log in local_runs/clifford_formula_check_log.txt)"
+}

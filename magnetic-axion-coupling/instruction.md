@@ -22,6 +22,6 @@ $$
 
 with indices running over $ x,y,z $ and $ \epsilon^{xyz}=+1 $. What is $ \theta $, taken in the interval $ (-\pi,\pi] $?
 
-Write `/app/output/answer.json` containing a JSON object with one numeric field, `theta`, holding $ \theta $ in radians. It is compared with the exact value and must agree to an absolute error of at most $ 10^{-8} $.
+Write `/app/output/answer.json` containing a JSON object with one numeric field, `theta`, holding $ \theta $ in radians. It is compared with the exact value and must agree to an absolute error of at most $ 10^{-3} $.
 
 You have 9000 seconds to complete this task. Do not cheat by using online solutions or hints specific to this task.

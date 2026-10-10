@@ -10,7 +10,7 @@ What the agent sees: the instruction only. The environment image holds Python wi
 | Eigenvectors straight from a diagonalizer | Random phases make the Chern-Simons integrand meaningless; a smooth periodic gauge or a gauge-free second-Chern route is required. |
 | Projection onto the orbital basis states | The overlap becomes singular (smallest eigenvalue 1e-5 on a 64^3 grid) because of the band inversion. |
 | Gauge-free route along the first path one tries (exchange before Neel mass) | The gap closes (Weyl semimetal) on that path. |
-| Coarse uniform grid | 64^3, 96^3 and 128^3 miss by 2e-3, 1e-4 and 1e-6 (`ablations.json`); the gate is 1e-8. |
+| Unconverged grid | A 64^3 uniform grid is off by 1.9e-3 and fails; uniform grids from 72^3 up, stretched grids and the gauge-free path all pass the 1e-3 gate (`convergence.json`). The gate targets physics, not one convergence strategy. |
 | Sign or branch slip | -1.885 or values shifted by 2 pi are rejected; the interval (-pi, pi] is fixed by the instruction. |
 | Looking up the reference | The cited framework (Qi-Hughes-Zhang 2008; Essin-Moore-Vanderbilt 2009) defines theta in general; this parameter set and its value do not appear in the literature. |
 | Strings, NaN, Infinity, booleans | Values are parsed as finite floats; booleans and non-finite values raise. |

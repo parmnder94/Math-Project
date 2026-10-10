@@ -16,7 +16,7 @@ import pytest
 ANSWER = "/app/output/answer.json"
 HERE = os.path.dirname(os.path.abspath(__file__))
 TRUTH = float(json.load(open(os.path.join(HERE, "truth.json")))["theta"])
-ABS_TOL = 1e-8
+ABS_TOL = 1e-3
 
 
 def _parse(v):

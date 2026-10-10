@@ -16,6 +16,9 @@
  },
  "chern_simons_uniform (c=0)": {
   "64": 1.887124540845,
+  "72": 1.8851214694,
+  "80": 1.8852775859,
+  "88": 1.8853816881,
   "96": 1.88534659834,
   "128": 1.885247816693,
   "160": 1.8852463318
@@ -42,5 +45,43 @@
    "128": -0.881049362271
   }
  },
- "note": "The gauge-free path route is limited mainly by its lambda quadrature (10 -> 20 nodes moves it by 1.9e-5). With 28 nodes per segment at N=96 it agrees with the truth to 1.6e-9, independently confirming value, sign convention and branch."
+ "note": "The 1e-3 gate is met by every converged correct method: both gauge routes, uniform or stretched grids from 72^3 up, and the gauge-free path from 10 nodes up. Only the unconverged 64^3 uniform grid misses (1.9e-3), and a grid-doubling check exposes it. The nearest physically wrong answer (Neel mass only) is 0.46 away.",
+ "every correct method we ran vs the 1e-3 gate (|error|, pass)": {
+  "Chern-Simons, smooth gauge, uniform 64^3 (not converged)": [
+   "1.9e-03",
+   false
+  ],
+  "Chern-Simons, smooth gauge, uniform 72^3": [
+   "1.3e-04",
+   true
+  ],
+  "Chern-Simons, smooth gauge, uniform 80^3": [
+   "3.1e-05",
+   true
+  ],
+  "Chern-Simons, smooth gauge, uniform 96^3": [
+   "1.0e-04",
+   true
+  ],
+  "Chern-Simons, smooth gauge, uniform 128^3": [
+   "1.2e-06",
+   true
+  ],
+  "Chern-Simons, smooth gauge, stretched 48^3": [
+   "3.5e-05",
+   true
+  ],
+  "gauge-free second-Chern path, 48^3, 10 nodes": [
+   "1.8e-05",
+   true
+  ],
+  "gauge-free second-Chern path, 96^3, 14 nodes": [
+   "3.1e-07",
+   true
+  ],
+  "gauge-free second-Chern path, 96^3, 28 nodes": [
+   "1.6e-09",
+   true
+  ]
+ }
 }
