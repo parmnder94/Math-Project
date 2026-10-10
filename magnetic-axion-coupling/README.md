@@ -53,7 +53,7 @@ taken modulo $e^2/h$ in $(-1/2,1/2]$, and graded at an absolute error of $3\time
 
 **Independent checks** (`authoring/evidence/convergence.json`):
 
-* **Literal definition.** `authoring/provenance/supercell_dPdB.py` computes $\partial P_z/\partial B_z$ on magnetic supercells and shares no code path with the truth. It uses the Landau gauge, the Berry-phase polarization of the $2q$ lowest bands and a central difference in the flux $\pm1/q$. With the Wilson-loop error removed and the series extrapolated in $1/q^2$, it agrees with the truth within its extrapolation uncertainty.
+* **Literal definition.** `authoring/provenance/supercell_dPdB.py` computes $\partial P_z/\partial B_z$ on magnetic supercells and shares no code path with the truth. It uses the Landau gauge, the Berry-phase polarization of the $2q$ lowest bands and a central difference in the flux $\pm1/q$. With the Wilson-loop error removed and the series extrapolated in $1/q^2$, it gives 0.201367 (three-point fit) and 0.201344 (two-point), within about $10^{-5}$ of the truth.
 * **Normalization and sign.** In the Clifford limit $J_1=J_2=0$, where the cross-gap part vanishes, the slab result equals θ/2π from an independent Chern–Simons code to $4\times10^{-6}$ (`authoring/evidence/local_runs/clifford_limit_log.txt`).
 * **Decomposition.** θ/2π = 0.2373567 from the Chern–Simons integral, and the same value from the surface Hall conductivity. So the cross-gap part is −0.0360.
 

@@ -20,13 +20,20 @@
   },
   "Nz=128": {
    "32": 0.19385376,
-   "48": 0.19794982
+   "48": 0.19794982,
+   "64": 0.19941376
   },
   "Nz=256": {
-   "32": 0.1938898
+   "32": 0.1938898,
+   "48": 0.19798572
   },
   "Wilson-loop error": "falls as 1/Nz^2 (5.8e-4, 1.4e-4, 3.6e-5); the Nz -> infinity value at q=32 is 0.19390, i.e. +7.7e-4 above Nz=32",
-  "extrapolation": "Nz=32 series corrected by +7.7e-4 and extrapolated in 1/q^2 from q=48,64 gives 0.20136, matching the slab truth to about 1e-5. Direct Nz=128 points: q=32 0.193854, q=48 0.197950 (Wilson-loop residual about +5e-5); 1/q^2 extrapolation of the Nz-converged q=32,48 points gives 0.2012, within 2e-4 of the truth, the remaining difference being the O(1/q^4) term."
+  "extrapolation": "Fit s + a/q^2 + b/q^4 to the Nz-converged q=32,48,64 points: 0.2013674; two-point 1/q^2 from q=48,64: 0.2013441. Both agree with the slab truth 0.2013552 to about 1e-5.",
+  "Nz-converged (Richardson in 1/Nz^2)": {
+   "32": 0.19390181,
+   "48": 0.19799769,
+   "64": 0.19946176
+  }
  },
  "decomposition": {
   "theta (Chern-Simons)": 1.491356062731,
