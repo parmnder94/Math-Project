@@ -1,1 +1,0 @@
-W0=-8 WA=-219 WB=-255 WAB=-113  D_l=-37  direct D_l=-37  min|d5| at zeros=3/10  det L=2  C2=-74

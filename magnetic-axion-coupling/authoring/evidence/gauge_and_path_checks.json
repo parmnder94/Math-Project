@@ -1,0 +1,15 @@
+{
+ "smallest eigenvalue of the trial overlap Phi^+ P Phi on a uniform 64^3 grid": {
+  "orbital trial |s> (x) |tau_z = +1>": 1.37e-03,
+  "orbital trial |s> (x) |tau_z = -1>": 1.30e-05,
+  "tau_y trial |s> (x) |tau_y = -1> (used)": 0.428
+ },
+ "gap along candidate paths from the time-reversal-symmetric TI": {
+  "Neel mass first, then exchange (used)": "min direct gap 0.0503 eV (local_runs/gap_scan_log.txt)",
+  "exchange first (m = 0 with full J1, J2)": "min direct gap 6.7e-14 eV: Weyl semimetal, path not admissible"
+ },
+ "gauge invariance": {
+  "tau_y trial, 128^3, c = 0.8": 1.885246646038,
+  "entangled spin-orbital trial (min overlap 0.107), 128^3, c = 0.8": 1.885246646060
+ }
+}

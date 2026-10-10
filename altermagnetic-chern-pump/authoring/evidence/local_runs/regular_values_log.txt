@@ -1,4 +1,0 @@
-i=1: roots 2288, deg at +e1 = -37, deg at -e1 = -37, min|det| 0.0695, min|d_i| at roots 0.17
-i=2: roots 2294, deg at +e2 = -37, deg at -e2 = -37, min|det| 0.0695, min|d_i| at roots 0.17
-i=3: roots 2288, deg at +e3 = -37, deg at -e3 = -37, min|det| 0.0695, min|d_i| at roots 0.17
-i=4: roots 2294, deg at +e4 = -37, deg at -e4 = -37, min|det| 0.0695, min|d_i| at roots 0.17

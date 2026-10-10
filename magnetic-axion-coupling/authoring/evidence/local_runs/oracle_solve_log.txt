@@ -1,0 +1,5 @@
+N=128 c=0.8  min direct gap on grid=0.0503  min trial overlap=0.428  theta=1.885246646038
+
+real	0m38.104s
+user	0m0.032s
+sys	0m0.024s

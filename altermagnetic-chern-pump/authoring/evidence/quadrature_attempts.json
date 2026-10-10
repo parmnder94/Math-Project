@@ -1,8 +1,0 @@
-{
- "note": "Direct periodic-trapezoid quadrature of (3/(8 pi^2)) * integral det[d, d_1 d, ..., d_4 d]/|d|^5 (authoring/provenance/degree_quadrature.py). The integrand is sharply peaked (min |d| about 0.17) and d_5 carries Fourier modes up to about 15 per l-variable, so moderate grids are far from the integer degree. This documents why numerical sampling does not settle the answer; it is not used for the truth.",
- "x-torus grids (exact value -74)": {
-  "24^4": -109.137,
-  "32^4": -142.562,
-  "40^4": -118.524
- }
-}
