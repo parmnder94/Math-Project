@@ -4,11 +4,15 @@ The force is built from F = div Sigma + Sigma grad(k log T) + B h and checked ag
 at start-up (for 'task' this is the explicit force of the instruction, verified in solution/solve.py).
 Estimates Sdot_m - kappa/m by (i) the definition and (ii) the exact identity m^(-1/2) E[A Phi].
 Step: coefficients frozen at X over dt; (w', integral of w' dt/sqrt(m)) sampled exactly in the reservoir frame.
-Usage: mc_fast.py case m dt_over_m nparticles tau seed"""
+With scheme 'mid' the step is repeated with the coefficients evaluated at the predicted midpoint X + dX/2 (same
+random numbers), removing the first-order freezing error, which otherwise biases the O(sqrt(m)) correlations that
+carry the finite heat by O(dt/m) even as m -> 0.
+Usage: mc_fast.py case m dt_over_m nparticles tau seed [left|mid]"""
 import json, sys, time
 import numpy as np
 from scipy.linalg import expm, cholesky, solve_continuous_lyapunov
 case, m, r, P, tau, seed = sys.argv[1], float(sys.argv[2]), float(sys.argv[3]), int(sys.argv[4]), float(sys.argv[5]), int(sys.argv[6])
+scheme = sys.argv[7] if len(sys.argv) > 7 else 'left'
 PAR = {"task": dict(a=0.8, lam=0.5, gam=(1, 3), temps=(1, 2), b=0.5, k=2, alpha=1/3, beta=0.5),
        "mild": dict(a=0.6, lam=0.5, gam=(1, 3), temps=(1, 2), b=0.5, k=2, alpha=1/3, beta=0.5),
        "original": dict(a=0.6, lam=2/3, gam=(1, 2), temps=(1, 2), b=1.0, k=1, alpha=0.4, beta=2/3)}[case]
@@ -68,12 +72,20 @@ for it in range(nsteps):
         Zw = from_frame(c, s, Z0@wp)/T
         accA += w[0]*(qJ*nx/T - q0*Tx/T**2) + w[1]*qJ/T + 2*(F[0]*Zw[0] + F[1]*Zw[1])
         accH += (np.einsum('in,ij,jn->n', wp, W0, wp)/T - gam.sum())/m
-    z = Phi@np.concatenate([wp, np.zeros((2, P))]) + Psi@np.concatenate([Fp/np.sqrt(m), np.zeros((2, P))]) \
-        + np.sqrt(T)*(Lc@rng.standard_normal((4, P)))
-    w = from_frame(c, s, z[:2]); dX = from_frame(c, s, z[2:])
+    xi = rng.standard_normal((4, P))
+    z = Phi@np.concatenate([wp, np.zeros((2, P))]) + Psi@np.concatenate([Fp/np.sqrt(m), np.zeros((2, P))]) + np.sqrt(T)*(Lc@xi)
+    dX = from_frame(c, s, z[2:])
+    if scheme == 'mid':
+        xm, ym = x + dX[0]/2, y + dX[1]/2
+        Fm, Tm, thm = force(xm, ym); cm, sm = np.cos(thm), np.sin(thm)
+        z = Phi@np.concatenate([to_frame(cm, sm, w), np.zeros((2, P))]) + Psi@np.concatenate([to_frame(cm, sm, Fm)/np.sqrt(m), np.zeros((2, P))]) \
+            + np.sqrt(Tm)*(Lc@xi)
+        c, s = cm, sm
+        dX = from_frame(c, s, z[2:])
+    w = from_frame(c, s, z[:2])
     x = (x + dX[0]) % (2*np.pi); y = (y + dX[1]) % (2*np.pi)
 n = nsteps - burn
 eA = accA/n/np.sqrt(m); eH = accH/n - kappa/m
-print(json.dumps(dict(case=case, m=m, dt_over_m=r, P=P, tau=tau, seed=seed, kappa=kappa,
+print(json.dumps(dict(case=case, scheme=scheme, m=m, dt_over_m=r, P=P, tau=tau, seed=seed, kappa=kappa,
                       E_identity=eA.mean(), se_identity=eA.std()/np.sqrt(P), E_definition=eH.mean(),
                       se_definition=eH.std()/np.sqrt(P), secs=round(time.time() - t0))), flush=True)
