@@ -1,26 +1,38 @@
 {
   "reference": {
-    "p": "1467167323933/5157470703125",
-    "decimal": 0.28447419450080796
+    "p": 0.6867588973650294,
+    "abs_error": 0.0
   },
   "endpoint frame D_r(1) set to the identity": {
-    "p": "3967634508388/5157470703125",
-    "decimal": 0.7692985063364378
+    "p": 0.4744223095883131,
+    "abs_error": 0.21233658777671627
   },
   "slow connection omitted": {
-    "p": "0",
-    "decimal": 0.0
+    "p": 0.4933306585315909,
+    "abs_error": 0.19342823883343846
   },
   "connection from R_r only (-pi K_r, D_r frame term dropped)": {
-    "p": null,
-    "decimal": 0.9059197279094596
+    "p": 0.749078089741988,
+    "abs_error": 0.06231919237695863
   },
   "reversed pulse keeps the carrier phase (no phi -> -phi)": {
-    "p": "186657997221/206298828125",
-    "decimal": 0.9047942681860545
+    "p": 0.7449935798879447,
+    "abs_error": 0.058234682522915276
   },
   "carrier phases ignored in the effective coupling": {
-    "p": "8837889/9765625",
-    "decimal": 0.9049998336
+    "p": 0.7243620193803594,
+    "abs_error": 0.037603122015330004
+  },
+  "(Q-P) part of the eighth-order block omitted": {
+    "p": 0.9814679273948493,
+    "abs_error": 0.2947090300298199
+  },
+  "eighth-order coupling omitted": {
+    "p": 1.0,
+    "abs_error": 0.3132411026349706
+  },
+  "B_8 off-diagonal coefficient 1e-6 too large": {
+    "p": 0.6867589816636979,
+    "abs_error": 8.429866846198808e-08
   }
 }

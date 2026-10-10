@@ -7,8 +7,8 @@ $$
 Fix $ \Delta>0 $. For each positive integer $ N $, set
 
 $$
-T_N=\frac{2\pi N}{\Delta},\quad
-\epsilon_N=\left(\frac{1080\pi}{8447\sqrt3\,\Delta T_N}\right)^{1/8},
+T_N=\frac{2\pi N}{\Delta},\qquad
+\epsilon_N=\left(10\,\Delta T_N\right)^{-1/8},
 $$
 
 $$
@@ -19,8 +19,8 @@ $$
 Three pulses are indexed by $ r=1,2,3 $, with
 
 $$
-(\alpha_1,\alpha_2,\alpha_3)=(0,\pi/2,\arctan(3/4)),\quad
-(\phi_1,\phi_2,\phi_3)=(\arctan(1/2),\arctan(2/3),\arctan(3/4)).
+(\alpha_1,\alpha_2,\alpha_3)=\left(0,\frac{\pi}{3},\frac{2\pi}{3}\right),\qquad
+(\phi_1,\phi_2,\phi_3)=\left(\frac{\pi}{6},\frac{\pi}{4},\frac{\pi}{3}\right).
 $$
 
 Each pulse uses its own $ 0\le t\le T_N $, $ s=t/T_N $, and
@@ -33,7 +33,7 @@ $$
 Writing $ \theta_r(t)=\Delta t+\phi_r $, define
 
 $$
-H_{r,N}(t)=R_r(s)\left[\left(2\Delta-\frac{23539\pi}{8447\sqrt3\,T_N}\right)Q+
+H_{r,N}(t)=R_r(s)\left[2\Delta Q+
 \Delta D_r(s)\left(2\epsilon_N\cos\theta_r(t)J_x+a_N(P-Q)-2b_N\cos(2\theta_r(t))X\right)D_r^\dagger(s)\right]R_r^\dagger(s).
 $$
 
@@ -46,8 +46,8 @@ $$
 +|1\rangle_C\langle1|\otimes\widetilde U_{1,N}\widetilde U_{2,N}\widetilde U_{3,N}.
 $$
 
-With $ \Delta $ fixed, what is the $ N\to\infty $ probability of measuring $ |-\rangle_C $? All angles use the principal real arctangent.
+With $ \Delta $ fixed, what is the $ N\to\infty $ probability of measuring $ |-\rangle_C $?
 
-Write `/app/output/answer.json` containing a JSON object with one field, `p`, holding the probability as a reduced fraction in a string of the form `"a/b"`.
+Write `/app/output/answer.json` containing a JSON object with one numeric field, `p`, holding the probability. It is compared with the exact value and must agree to an absolute error of at most $ 10^{-9} $.
 
 You have 9000 seconds to complete this task. Do not cheat by using online solutions or hints specific to this task.

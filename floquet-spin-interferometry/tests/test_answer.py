@@ -1,34 +1,31 @@
 """Verifier for floquet-spin-interferometry.
 
-The answer is the exact N -> infinity probability of measuring |->_C for the interferometer in the instruction.
-tests/truth.json holds it as a reduced fraction. It follows from the eighth-order Floquet effective Hamiltonian
-(computed by an exact Feshbach recurrence), the slow-frame connection and exact finite matrix algebra; solution/solve.py
-reproduces it in exact arithmetic, and direct simulations of the literal protocol approach it (authoring/evidence).
+The answer is the N -> infinity probability of measuring |->_C for the interferometer in the instruction, a real
+number with no closed form. tests/truth.json holds it to 30 digits. It follows from the eighth-order Floquet effective
+Hamiltonian (exact Feshbach recurrence), the slow-frame connection and 40-digit matrix exponentials; solution/solve.py
+reproduces it, and direct simulations of the literal protocol approach it (authoring/evidence).
 The verifier only parses /app/output/answer.json; it never runs agent code.
 """
 import json
 import math
 import os
 import re
-from fractions import Fraction
 
 import pytest
 
 ANSWER = "/app/output/answer.json"
 HERE = os.path.dirname(os.path.abspath(__file__))
-TRUTH = Fraction(json.load(open(os.path.join(HERE, "truth.json")))["p"])
+TRUTH = float(json.load(open(os.path.join(HERE, "truth.json")))["p"])
+ABS_TOL = 1e-9
 
 
 def _parse(v):
-    """Only an exact fraction is accepted: a string "a/b" (or an integer)."""
-    if isinstance(v, bool) or isinstance(v, float):
-        raise ValueError("the probability must be given as an exact fraction string \"a/b\"")
-    if isinstance(v, int):
-        return Fraction(v)
-    s = re.sub(r"\s+", "", str(v))
-    if not re.fullmatch(r"[+-]?\d+(/[+-]?\d+)?", s):
-        raise ValueError(f"not an exact fraction: {v!r}")
-    return Fraction(s)
+    if isinstance(v, bool):
+        raise ValueError("boolean is not a number")
+    x = float(v) if isinstance(v, (int, float)) else float(re.sub(r"\s+", "", str(v)))
+    if not math.isfinite(x):
+        raise ValueError("non-finite value")
+    return x
 
 
 @pytest.fixture(scope="module")
@@ -42,4 +39,5 @@ def answer():
 
 
 def test_probability(answer):
-    assert answer == TRUTH, f"p = {answer} is not the exact value"
+    err = abs(answer - TRUTH)
+    assert err <= ABS_TOL, f"p = {answer!r} differs from the exact value by {err:.2e} (tolerance {ABS_TOL:.0e})"

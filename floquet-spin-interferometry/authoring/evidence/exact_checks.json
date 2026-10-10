@@ -1,10 +1,7 @@
 {
   "B_1..B_7": "identically zero",
   "B_8": "(23539/2160)(Q-P) + (8447/540) X",
-  "X_phi_coefficient": "2/sqrt(3)",
-  "scalar_after_gap_correction": "-(gamma/2) I, gamma = 23539/(8447 sqrt3)",
-  "w": "(2223136055259 + 2895894695712 i)/5157470703125",
-  "p_minus": "1467167323933/5157470703125",
-  "gcd": 1,
-  "checks": "solution/solve.py (Hermite-free Feshbach recurrence + polynomial exponential) and authoring/provenance/floquet.py (independent recurrence implementation); exp(-i pi M) polynomial checked against numerical expm to 1e-12"
+  "generator": "G_r = (1/10)[(23539/2160)(Q-P) + (8447/540) X_phi] - (3 pi/2) K_r; reversed pulse phi -> -phi, connection sign flipped",
+  "p_minus": "0.686758897365029385815907257186",
+  "checks": "solution/solve.py (closed-form endpoint frames, 40-digit expm) and an independent script using numerical expm for the frames agree to 30 digits; authoring/provenance/floquet.py independently reproduces B_1..B_7 = 0 and B_8; the same pipeline with the constants of the earlier rational version reproduces its fraction 1467167323933/5157470703125 to 3e-41"
 }

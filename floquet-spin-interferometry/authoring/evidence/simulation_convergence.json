@@ -1,62 +1,69 @@
 {
-  "method": "literal protocol with Delta = 1 in the moving frame W_r = R_r D_r; one-period propagator U_F in 40-digit arithmetic (Taylor integrator), slow O(1/T) terms in the interaction picture of U_F (authoring/provenance/sim3.py; sim.py steps every period and agrees at N = 1e3, 1e4)",
-  "points": [
-    [
-      1000000000.0,
-      0.04965,
-      0.2831264956
-    ],
-    [
-      10000000000.0,
-      0.03723,
-      0.2820409743
-    ],
-    [
-      100000000000.0,
-      0.02792,
-      0.2818805372
-    ],
-    [
-      1000000000000.0,
-      0.02094,
-      0.2820996525
-    ],
-    [
-      10000000000000.0,
-      0.0157,
-      0.2824498185
-    ],
-    [
-      100000000000000.0,
-      0.01177,
-      0.2828171
-    ],
-    [
-      1000000000000000.0,
-      0.00883,
-      0.2831522062
-    ],
-    [
-      1e+16,
-      0.00662,
-      0.2834376334
-    ]
-  ],
+  "method": "literal protocol with Delta = 1 in the moving frame W_r = R_r D_r; one-period propagator U_F in 40-digit arithmetic (Taylor integrator), slow O(1/T) terms in the interaction picture of U_F (authoring/provenance/sim4.py, using sim2.py and sim3.py); sim_brute.py steps every period",
   "columns": [
     "N",
     "eps_N",
     "p_minus"
   ],
-  "small_N_brute_force": {
-    "1e3": 0.5733259491,
-    "1e4": 0.4654209502
-  },
+  "points": [
+    [
+      1000000.0,
+      0.10598,
+      0.5647777456
+    ],
+    [
+      100000000.0,
+      0.0596,
+      0.6353230588
+    ],
+    [
+      10000000000.0,
+      0.03351,
+      0.6679443626
+    ],
+    [
+      1000000000000.0,
+      0.01885,
+      0.6799678511
+    ],
+    [
+      10000000000000.0,
+      0.01413,
+      0.6826246299
+    ],
+    [
+      100000000000000.0,
+      0.0106,
+      0.684205429
+    ],
+    [
+      1000000000000000.0,
+      0.00795,
+      0.6851542936
+    ],
+    [
+      1e+16,
+      0.00596,
+      0.6857310367
+    ]
+  ],
   "extrapolation_eps_to_0": {
-    "deg4_all8": 0.2844742,
-    "deg4_last6": 0.2844727,
-    "deg3_last6": 0.284468,
-    "deg2_last7": 0.284464
+    "deg4_7pts": 0.6867659,
+    "deg3_6pts": 0.6867469,
+    "deg2_5pts": 0.6867974,
+    "deg3_5pts": 0.6867321
   },
-  "target": "1467167323933/5157470703125 = 0.28447419450080796",
-  "note": "Corrections are O(eps_N) = O(N^-1/8) (micromotion dressing of the slow connection), so convergence in N is very slow; the deviation is linear in eps at small eps and extrapolates to the exact value."
+  "target": "0.686758897365029385815907257186",
+  "note": "Corrections are O(eps_N) = O(N^-1/8) (micromotion dressing of the slow connection); the deviation shrinks steadily with eps and the polynomial extrapolations bracket the exact value to about 3e-5.",
+  "small_N_check": {
+    "N=1e3": {
+      "brute_force": 0.3006938524,
+      "fast_method": 0.3008478875
+    },
+    "N=1e4": {
+      "brute_force": 0.4249193168,
+      "fast_method": 0.4249371055
+    },
+    "note": "differences shrink like 1/N, the error of the per-period slow-term treatment"
+  }
 }
