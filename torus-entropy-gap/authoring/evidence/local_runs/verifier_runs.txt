@@ -1,0 +1,28 @@
+== oracle: {"Delta": "-814956740459/15500795001120"}
+PASSED tests/test_answer.py::test_delta
+============================== 1 passed in 0.03s ===============================
+reward=1
+== nop: (no file)
+ERROR tests/test_answer.py::test_delta - FileNotFoundError: [Errno 2] No such...
+=============================== 1 error in 0.03s ===============================
+reward=0
+== correct value as a decimal: {"Delta": -0.052575157622568}
+ERROR tests/test_answer.py::test_delta - ValueError: Delta must be an exact f...
+=============================== 1 error in 0.03s ===============================
+reward=0
+== same value, not in lowest terms: {"Delta": "-1629913480918/31001590002240"}
+PASSED tests/test_answer.py::test_delta
+============================== 1 passed in 0.02s ===============================
+reward=1
+== original-problem answer: {"Delta": "-141231719/146966400"}
+FAILED tests/test_answer.py::test_delta - AssertionError: Delta = -141231719/...
+============================== 1 failed in 0.03s ===============================
+reward=0
+== kinetic-current route: {"Delta": "6843372652801/15500795001120"}
+FAILED tests/test_answer.py::test_delta - AssertionError: Delta = 68433726528...
+============================== 1 failed in 0.03s ===============================
+reward=0
+== 1D Markov projection route: {"Delta": "21336963012697/28848701807640"}
+FAILED tests/test_answer.py::test_delta - AssertionError: Delta = 21336963012...
+============================== 1 failed in 0.03s ===============================
+reward=0

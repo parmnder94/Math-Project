@@ -1,0 +1,47 @@
+schema_version = "1.4"
+
+artifacts = ["/app/output/answer.json"]
+
+[task]
+name = "afterquery/torus-entropy-gap"
+description = "For a two-reservoir, magnetically driven Brownian particle on a torus with rotating anisotropic friction, find the exact gap between the finite part of the small-mass reservoir entropy flow and the time-reversal relative-entropy rate of one observed coordinate of the overdamped limit."
+authors = [{ name = "Dr. Prince", email = "princesolanki197@gmail.com" }]
+keywords = ["stochastic thermodynamics", "Langevin dynamics", "Smoluchowski-Kramers limit", "entropy production", "relative entropy", "time reversal", "partial observation", "homogenization"]
+
+[metadata]
+author_name = "Dr. Prince"
+author_email = "princesolanki197@gmail.com"
+author_organization = "IIT Roorkee"
+author_profile = "https://scholar.google.com/citations?user=5aKFLTAAAAAJ&hl=en"
+research_advisor = ""
+referred_by = ""
+conflicts_of_interest = "None"
+domain = "mathematical-sciences"
+field = "applied-mathematics"
+subfield = "Stochastic thermodynamics: small-mass limits, entropy flow and partially observed irreversibility"
+category = "Science"
+subcategory = "Applied Mathematics & Scientific Computing"
+tags = ["stochastic thermodynamics", "Langevin dynamics", "Smoluchowski-Kramers limit", "entropy production", "relative entropy", "time reversal", "partial observation", "homogenization"]
+expert_time_estimate_hours = 30
+relevant_experience = "Research in stochastic thermodynamics or multiscale stochastic analysis: small-mass (Smoluchowski-Kramers) limits with state-dependent friction, homogenization of kinetic Fokker-Planck equations, entropy production and Girsanov relative entropy of diffusions, and partially observed processes."
+difficulty_explanation = "Setting: a Brownian particle on a torus is coupled to two reservoirs along a rotating frame, with different frictions and temperatures, a magnetic term and a position-dependent force. As the mass goes to zero the reservoir entropy flow diverges like kappa/m, and its finite part is the physically meaningful heat; separately, an experimenter who records only the coordinate x of the overdamped motion can bound irreversibility by the relative entropy between the forward and reversed x paths. The task asks for the exact difference. Why it is hard: nothing in the statement names the structure. The force is given as explicit trigonometric expressions; one has to find that the scaled velocity is locally Gaussian with the non-Maxwellian covariance T R C0 R^T (a Lyapunov equation with the magnetic term and two temperatures), recognise that the force equals div Sigma + Sigma grad(log T^2) + B h, derive the overdamped generator with its noise-induced drift, and find that the stationary density is T^2/<T^2> with a nonzero current. The finite part of the entropy flow needs the anisotropic entropy weights, the constant kappa = 3/104, and the first kinetic correction to the stationary density (a second-order Hilbert expansion whose current terms do not vanish). The observed x path is not Markov; its relative-entropy rate equals the full-position rate only because the quadratic variation of x and its covariation with the local volatility reconstruct theta modulo pi, and the y -> y + pi symmetry makes the remaining lift carry no information. Shortcuts give wrong values (authoring/evidence/ablations.json): using the kinetic current rho h in the relative entropy gives +0.441; treating x as a one-dimensional Markov diffusion gives +0.740; assuming a density proportional to T gives -1.129; dropping the current part of the force in the finite heat gives -1.919; weighting both reservoirs by 1/T gives +0.620; the true value is -0.0526, and only the exact fraction is accepted. In practice this is the work of a researcher in stochastic thermodynamics or multiscale stochastic analysis who studies entropy production of coarse-grained and partially observed Langevin systems; for a specialist it is several days of derivation and exact computation."
+solution_explanation = "In the reservoir frame the fast matrices are constant: B0 = diag(1,3) - J/2, Q0 = diag(1,6), entropy weights W0 = diag(1,3/2). The Lyapunov equation gives C0 = [[55,-6],[-6,103]]/52, so w = sqrt(m)V is locally N(0, Sigma), Sigma = T R C0 R^T, and the force is F = div Sigma + Sigma grad(log T^2) + B h with B = R B0 R^T, h = (1/(3T^2), T'/(2T)). The generator is L/m + A/sqrt(m) with A = w.grad_X + F.grad_w; the limit L_eff = -<A L^-1 A> has drift M F + (d_l M) Sigma_l and diffusion D = T R D0 R^T, M = B^-1, D0 = [[168,-24],[-24,100]]/169, and anti(M Sigma) = (7/26) T J. The stationary density is rho = T^2/<T^2> with velocity v = j/rho = (1/(3T^2), T'/(2T) + (21/26)T'). The x path determines d[x]/dt = 2 D_xx = 2T a(theta) and d[x,a(theta)], hence theta mod pi; with the y -> y + pi symmetry the x-path relative-entropy rate equals int rho v^T D^-1 v = 1012560749/390300768. Entropy flow: Sdot_m = (1/m)E[w^T W w/T - 4]; with Phi = w^T Z w, Z = R Z0 R^T/T, B0^T Z0 + Z0 B0 = W0, L Phi = -w^T W w/T + 2 tr(Q0 Z0), so Sdot_m - kappa/m = m^(-1/2) E[A Phi] with kappa = 3/104, and the Hilbert expansion gives Sdot_0 = -int f0 A L^-1 A Phi = 3283241117173/1291732916760. Hence Delta = -814956740459/15500795001120. solution/solve.py does all of this in exact rational arithmetic (polynomials in cos x, sin x, cos theta, sin theta, 1/T; exact theta- and x-averages with <T^n> from Legendre polynomials) in about 1 s, and checks the explicit force, the closed-form drift and the stationarity of rho exactly."
+verification_explanation = "The verifier parses /app/output/answer.json and accepts Delta only if it equals tests/truth.json exactly as a fraction (-814956740459/15500795001120); decimals are rejected. Ground truth: computed by the reference solver from first principles (homogenized generator, Hilbert expansion and Girsanov rate), not from a supplied answer. Independent checks: (1) the task is a modification of an author-supplied problem whose answer, -141231719/146966400, was derived by the author through a different route (explicit cubic-moment tensors in the reservoir frame); the same solver with the original parameters reproduces it exactly, including both parts (41249/28800 and 8657741/18370800). (2) The stationarity of rho = T^2/<T^2>, the closed-form drift and the equality of the explicit force with its structured form are checked exactly in the solver. (3) A Monte Carlo simulation of the literal underdamped SDE at finite mass (authoring/provenance/mc_heat.py, authoring/evidence/monte_carlo.json) estimates Sdot_m - kappa/m and agrees with Sdot_0 within its statistical and discretization error. The shortcut values in authoring/evidence/ablations.json are all rejected."
+
+[verifier]
+timeout_sec = 600.0
+environment_mode = "separate"
+
+[verifier.environment]
+network_mode = "no-network"
+
+[agent]
+timeout_sec = 9000.0
+
+[environment]
+build_timeout_sec = 600.0
+cpus = 2
+memory_mb = 4096
+storage_mb = 10240
+gpus = 0
+network_mode = "public"

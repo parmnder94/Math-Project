@@ -1,0 +1,58 @@
+{
+  "reference": {
+    "finite_heat": "3283241117173/1291732916760",
+    "kl_rate": "1012560749/390300768",
+    "Delta": "-814956740459/15500795001120",
+    "Delta_float": -0.05257515762256812,
+    "abs_error": 0.0
+  },
+  "KL rate from the kinetic current rho h instead of j": {
+    "finite_heat": "3283241117173/1291732916760",
+    "kl_rate": "4850465/2309472",
+    "Delta": "6843372652801/15500795001120",
+    "Delta_float": 0.44148526913016634,
+    "abs_error": 0.4940604267527344
+  },
+  "x treated as a 1D Markov diffusion with y-averaged coefficients": {
+    "finite_heat": "3283241117173/1291732916760",
+    "kl_rate": "528125/293058",
+    "Delta": "21336963012697/28848701807640",
+    "Delta_float": 0.7396160546484741,
+    "abs_error": 0.7921912122710423
+  },
+  "stationary density taken proportional to T instead of T^2": {
+    "finite_heat": "57912035252731/5284361932200",
+    "kl_rate": "19300220531/1596684960",
+    "Delta": "-71563835355893/63412343186400",
+    "Delta_float": -1.1285474051247684,
+    "abs_error": 1.0759722475022002
+  },
+  "finite heat without the current part B h of the force": {
+    "finite_heat": "448452077/664471665",
+    "kl_rate": "1012560749/390300768",
+    "Delta": "-29752360094279/15500795001120",
+    "Delta_float": -1.9194086556289056,
+    "abs_error": 1.8668334980063375
+  },
+  "entropy weight gam_a/T for both reservoirs (T_2 = 2T ignored)": {
+    "finite_heat": "7985135581/2484101763",
+    "kl_rate": "1012560749/390300768",
+    "Delta": "147898398137/238473769248",
+    "Delta_float": 0.6201872793111831,
+    "abs_error": 0.6727624369337513
+  },
+  "observed x path taken as reversible (KL rate 0)": {
+    "finite_heat": "3283241117173/1291732916760",
+    "kl_rate": "0",
+    "Delta": "3283241117173/1291732916760",
+    "Delta_float": 2.5417337241882922,
+    "abs_error": 2.59430888181086
+  },
+  "original problem (user-supplied parameters) reproduced by the same pipeline": {
+    "finite_heat": "8657741/18370800",
+    "kl_rate": "41249/28800",
+    "Delta": "-141231719/146966400",
+    "independent_derivation_value": "-141231719/146966400",
+    "match": true
+  }
+}

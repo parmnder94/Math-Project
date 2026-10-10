@@ -1,0 +1,8 @@
+#!/bin/bash
+# usage: verifier_local_run.sh <dir containing answer.json or empty dir>
+# Builds the verifier image from ../../tests and runs test.sh with the given directory mounted at /app/output.
+set -euo pipefail
+HERE="$(cd "$(dirname "$0")" && pwd)"
+docker build -q -t teg-tests "$HERE/../../tests" >/dev/null
+docker run --rm --network none -v "$1":/app/output:ro teg-tests bash -c \
+  "bash /tests/test.sh >/tmp/log 2>&1; tail -2 /tmp/log; echo reward=\$(cat /logs/verifier/reward.txt)"
