@@ -19,10 +19,15 @@
    O(eps^2) (a first-order kick times the frame term always carries an odd photon number), H_vV = eps^8 B_8 + O(eps^10),
    and the pulse ends at the carrier phase it started with (Delta T_N = 2 pi N).  Hence, to O(eps),
    U_r = S_r e^{-i eps K1(phi_r)} e^{-i G_r} e^{i eps K1(phi_r)},  Utilde_r = e^{-i eps K1(-phi_r)} e^{-i Gtilde_r} e^{i eps K1(-phi_r)} S_r^+,
-   and c = dp/deps at eps = 0.  Corrections to p are O(eps^2) (coefficient about -15).
+   and c1 = dp/deps at eps = 0.
 4. Evaluation.  R_r(1) = -(7i/3) J_r + (4i/3) J_r^3 and D_r(1) = Q - i K_r exactly; the exponentials and the overlap
    w = Tr(B^+ A P)/2 are evaluated in 60-digit arithmetic, p = (1 - Re w)/2, and c is the symmetric difference
    quotient of p at eps = +-1e-25 (exact to about 1e-35).
+5. c2 and c3.  In the moving frame H = H0(t) + C(s)/T with H0 periodic, U0(t) = P0(t) e^{-i Lam t/2pi}.  Averaging the O(1/T)
+   term over each period (error O(1/N) = O(eps^8)) gives i d eta/ds = (N Lam + <P0^+ C(s) P0>) eta, U = eta(1), and N enters
+   only through N Lam = Lam/(20 pi eps^8).  This defines an analytic F(eps) with p_N = F(eps_N) + O(eps^8) (solution/smooth.py,
+   50-digit ball arithmetic).  F is evaluated on eps = +-0.005 .. +-0.04 and (F - p_inf - c1 eps)/eps^2 is interpolated by a
+   degree-15 polynomial; a free fit of F must reproduce p_inf and c1 (it does to about 1e-19).
 """
 import json, os
 import mpmath as mp
@@ -131,6 +136,23 @@ def first_correction(beta_q, beta_x, **kw):
     return (probability(beta_q, beta_x, eps=h, **kw)[0] - probability(beta_q, beta_x, eps=-h, **kw)[0])/(2*h)
 
 
+def taylor_coefficients(p_inf, c1, h="0.005", m=8, dps=50, **kw):
+    """c2, c3 from F(eps) on eps = +-h, ..., +-m h: fit (F - p_inf - c1 eps)/eps^2 by a polynomial of degree 2m - 1.
+    A free fit of F itself (all coefficients) is returned as a check on p_inf and c1."""
+    from flint import arb
+    import smooth
+    smooth.setup(dps)
+    mp.mp.dps = dps
+    pts = []
+    for k in list(range(-m, 0)) + list(range(1, m + 1)):
+        e = arb(h)*k
+        pts.append((mp.mpf(e.str(dps, radius=False)), mp.mpf(smooth.F(e, **kw).str(dps - 3, radius=False))))
+    G = mp.lu_solve(mp.matrix([[e**i for i in range(2*m)] for e, _ in pts]),
+                    mp.matrix([(v - p_inf - c1*e)/e**2 for e, v in pts]))
+    free = mp.lu_solve(mp.matrix([[e**i for i in range(2*m)] for e, _ in pts]), mp.matrix([v for _, v in pts]))
+    return G[0], G[1], free
+
+
 def main():
     B = floquet_B()
     for n in range(1, 8):
@@ -139,13 +161,17 @@ def main():
     beta_x = sp.nsimplify(B[8][0, 2]/X[0, 2])
     assert simp(B[8] - (beta_q*(Q - P) + beta_x*X)) == sp.zeros(4)
     p, w = probability(beta_q, beta_x)
-    c = first_correction(beta_q, beta_x)
+    c1 = first_correction(beta_q, beta_x)
+    c2, c3, free = taylor_coefficients(p, c1)
+    assert abs(free[0] - p) < 1e-15 and abs(free[1] - c1) < 1e-14, (free[0] - p, free[1] - c1)
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w") as fh:
-        json.dump({"p": float(p), "c": float(c)}, fh)
+        json.dump({"p": float(p), "c1": float(c1), "c2": float(c2), "c3": float(c3)}, fh)
     print(f"B8 = {beta_q} (Q-P) + {beta_x} X ;  w = {mp.nstr(w, 20)}")
-    print(f"p_inf = {mp.nstr(p, 30)}")
-    print(f"c     = {mp.nstr(c, 30)}")
+    print(f"p_inf = {mp.nstr(p, 30)}   (free fit of F: {mp.nstr(free[0] - p, 3)})")
+    print(f"c1    = {mp.nstr(c1, 30)}   (free fit of F: {mp.nstr(free[1] - c1, 3)})")
+    print(f"c2    = {mp.nstr(c2, 20)}")
+    print(f"c3    = {mp.nstr(c3, 20)}")
 
 
 if __name__ == "__main__":

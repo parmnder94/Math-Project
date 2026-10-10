@@ -46,8 +46,8 @@ $$
 +|1\rangle_C\langle1|\otimes\widetilde U_{1,N}\widetilde U_{2,N}\widetilde U_{3,N}.
 $$
 
-With $ \Delta $ fixed, the probability $ p_N $ of measuring $ |-\rangle_C $ has an expansion $ p_N=p_\infty+c\,\epsilon_N+O(\epsilon_N^2) $ as $ N\to\infty $. Find $ p_\infty $ and $ c $.
+With $ \Delta $ fixed, the probability $ p_N $ of measuring $ |-\rangle_C $ has an expansion $ p_N=p_\infty+c_1\epsilon_N+c_2\epsilon_N^2+c_3\epsilon_N^3+O(\epsilon_N^4) $ as $ N\to\infty $. Find $ p_\infty $, $ c_1 $, $ c_2 $ and $ c_3 $.
 
-Write `/app/output/answer.json` containing a JSON object with two numeric fields: `p`, holding $ p_\infty $, and `c`, holding $ c $. Each is compared with the exact value and must agree to an absolute error of at most $ 10^{-9} $.
+Write `/app/output/answer.json` containing a JSON object with four numeric fields: `p`, holding $ p_\infty $, and `c1`, `c2`, `c3`, holding $ c_1 $, $ c_2 $, $ c_3 $. Each is compared with the exact value and must agree to an absolute error of at most $ 10^{-9} $.
 
 You have 9000 seconds to complete this task. Do not cheat by using online solutions or hints specific to this task.

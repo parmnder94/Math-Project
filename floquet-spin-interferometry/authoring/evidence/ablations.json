@@ -62,5 +62,30 @@
   "naive numerical slope (p_N - p_inf)/eps_N at N = 1e40 (c2 about -15)": {
     "c_estimate": -0.08368043186320727,
     "abs_error_c": 9.15e-05
+  },
+  "reference (smooth interpolant F)": {
+    "c2": -14.971797401527985,
+    "c3": 7.337861002894855,
+    "abs_error_c2": 0.0,
+    "abs_error_c3": 0.0
+  },
+  "static boundary kicks around exp(-i G_r) (first-order K1 exponentiated, B_8 only)": {
+    "c2": -9.159663538877732,
+    "c3": 1.1802886580615264,
+    "abs_error_c2": 5.812133862650252,
+    "abs_error_c3": 6.157572344833328
+  },
+  "exact one-period Floquet Hamiltonian, slow connection not dressed by the micromotion": {
+    "c2": -1.8550553344036393,
+    "c3": -1.4552128504948874,
+    "abs_error_c2": 13.116742067124346,
+    "abs_error_c3": 8.793073853389743,
+    "p": 0.6867588973650294,
+    "c1": 0.14270479631548028,
+    "abs_error_c1": 0.22629372817868754
+  },
+  "remainder (p_N - p_inf - c1 eps_N)/eps_N^2 at N = 1e40 taken as c2": {
+    "c2": -14.971753154226137,
+    "abs_error_c2": 4.424730184745598e-05
   }
 }

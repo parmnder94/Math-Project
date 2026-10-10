@@ -1,10 +1,12 @@
 """Verifier for floquet-spin-interferometry.
 
-The answer is the pair (p_inf, c) in p_N = p_inf + c eps_N + O(eps_N^2) for the interferometer in the instruction,
-real numbers with no closed form. tests/truth.json holds both to 30 digits. p_inf follows from the eighth-order Floquet
-effective Hamiltonian (exact Feshbach recurrence) and the slow-frame connection; c from the first-order micromotion
-kicks at the pulse boundaries. solution/solve.py reproduces both, and high-precision simulations of the literal
-protocol confirm them (authoring/evidence).
+The answer is (p_inf, c1, c2, c3) in p_N = p_inf + c1 eps_N + c2 eps_N^2 + c3 eps_N^3 + O(eps_N^4) for the
+interferometer in the instruction, real numbers with no closed form. tests/truth.json holds p_inf and c1 to 30 digits
+and c2, c3 to 18. p_inf follows from the eighth-order Floquet effective Hamiltonian (exact Feshbach recurrence) and the
+slow-frame connection; c1 from the first-order micromotion kicks at the pulse boundaries; c2 and c3 from a smooth
+interpolant F(eps) with p_N = F(eps_N) + O(eps_N^8) built from the exact one-period Floquet propagator and the
+micromotion-dressed slow connection. solution/solve.py reproduces all four, and high-precision simulations of the
+literal protocol confirm them (authoring/evidence).
 The verifier only parses /app/output/answer.json; it never runs agent code.
 """
 import json
@@ -17,7 +19,7 @@ import pytest
 ANSWER = "/app/output/answer.json"
 HERE = os.path.dirname(os.path.abspath(__file__))
 TRUTH = {k: float(v) for k, v in json.load(open(os.path.join(HERE, "truth.json"))).items()}
-FIELDS = ["p", "c"]
+FIELDS = ["p", "c1", "c2", "c3"]
 ABS_TOL = 1e-9
 
 

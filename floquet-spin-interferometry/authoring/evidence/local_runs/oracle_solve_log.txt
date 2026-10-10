@@ -1,4 +1,13 @@
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+
+[notice] A new release of pip is available: 25.0.1 -> 26.2.1
+[notice] To update, run: pip install --upgrade pip
 B8 = 23539/2160 (Q-P) + 8447/540 X ;  w = (-0.37351779473005877163 + 0.15583028563096767626j)
-p_inf = 0.686758897365029385815907257186
-c     = -0.0835889318632072795759772701614
-exit=0 wall 12 s
+p_inf = 0.686758897365029385815907257186   (free fit of F: -1.26e-22)
+c1    = -0.0835889318632072795759772701614   (free fit of F: 1.52e-19)
+c2    = -14.971797401527984548
+c3    = 7.3378610028948548841
+
+real	1m27.259s
+user	0m0.034s
+sys	0m0.016s

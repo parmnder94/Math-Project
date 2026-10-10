@@ -1,18 +1,36 @@
-== oracle {"p": 0.6867588973650294, "c": -0.08358893186320727}
+== oracle: {"p": 0.6867588973650294, "c1": -0.08358893186320727, "c2": -14.971797401527985, "c3": 7.337861002894855}
+PASSED tests/test_answer.py::test_field[c2]
+PASSED tests/test_answer.py::test_field[c3]
+============================== 4 passed in 0.03s ===============================
 reward=1
 
-== nop 
+== nop: (no file)
+ERROR tests/test_answer.py::test_field[c2] - FileNotFoundError: [Errno 2] No ...
+ERROR tests/test_answer.py::test_field[c3] - FileNotFoundError: [Errno 2] No ...
+============================== 4 errors in 0.04s ===============================
 reward=0
 
-== only_p {"p": 0.6867588973650294}
+== previous two-field answer (p, c): {"p": 0.6867588973650294, "c": -0.08358893186320727}
+FAILED tests/test_answer.py::test_field[c2] - AssertionError: missing field c2
+FAILED tests/test_answer.py::test_field[c3] - AssertionError: missing field c3
+========================= 3 failed, 1 passed in 0.04s ==========================
 reward=0
 
-== strob {"p": 0.6867588973650294, "c": 0.0}
+== static first-order kicks (B_8 only): {"p": 0.6867588973650294, "c1": -0.08358893186320727, "c2": -9.159663538877732, "c3": 1.1802886580615264}
+FAILED tests/test_answer.py::test_field[c2] - AssertionError: c2 = -9.1596635...
+FAILED tests/test_answer.py::test_field[c3] - AssertionError: c3 = 1.18028865...
+========================= 2 failed, 2 passed in 0.05s ==========================
 reward=0
 
-== naive {"p": 0.6867588973650294, "c": -0.0836804}
+== c2 from the remainder at N = 1e40: {"p": 0.6867588973650294, "c1": -0.08358893186320727, "c2": -14.971753154226137, "c3": 7.337861002894855}
+PASSED tests/test_answer.py::test_field[c3]
+FAILED tests/test_answer.py::test_field[c2] - AssertionError: c2 = -14.971753...
+========================= 1 failed, 3 passed in 0.04s ==========================
 reward=0
 
-== close {"p": 0.6867588976, "c": -0.0835889321}
+== every field off by 3e-10: {"p": 0.6867588976650294, "c1": -0.08358893156320727, "c2": -14.971797401227985, "c3": 7.337861003194855}
+PASSED tests/test_answer.py::test_field[c2]
+PASSED tests/test_answer.py::test_field[c3]
+============================== 4 passed in 0.02s ===============================
 reward=1
 
