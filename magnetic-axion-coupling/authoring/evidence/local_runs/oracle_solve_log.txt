@@ -1,1 +1,5 @@
-N=128 c=0.8  min direct gap on grid=0.0503  min trial overlap=0.428  theta=1.885246646038
+slab gap 0.413  dM/dE per area [np.float64(0.39891346292317276), np.float64(0.527100133717151)]  alpha_zz = 0.2013551516 e^2/h
+
+real	0m14.306s
+user	0m0.026s
+sys	0m0.017s

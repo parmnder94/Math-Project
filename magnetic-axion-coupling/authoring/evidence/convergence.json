@@ -1,87 +1,41 @@
 {
- "truth": 1.885246645979,
- "chern_simons_stretched (cs_stretched.py, tau_y trial)": {
-  "c=0.8": {
-   "48": 1.885281738719,
-   "64": 1.885249258102,
-   "96": 1.885246659483,
-   "128": 1.885246646038,
-   "160": 1.885246645979
+ "truth alpha_zz (e^2/h)": 0.2013551671,
+ "slab dM_z/dE_z (slab_dMdE.py; slope per layer x 2 pi)": {
+  "Nk=80, L10->14": 0.201355733093,
+  "Nk=80, L14->18": 0.20135517351,
+  "Nk=80, L18->22": 0.20135516707,
+  "Nk=48, L14->18 (solve.py)": 0.2013551516,
+  "Nk=64 and Nk=96, L12->16": 0.20135523
+ },
+ "supercell dP_z/dB_z, central difference in flux +-1/q (supercell_dPdB.py)": {
+  "Nz=32": {
+   "16": 0.17462661,
+   "24": 0.18770954,
+   "32": 0.19313168,
+   "48": 0.19723008,
+   "64": 0.19869625
   },
-  "c=0.9": {
-   "96": 1.885246620504,
-   "128": 1.885246645547,
-   "160": 1.885246645974
-  }
- },
- "chern_simons_uniform (c=0)": {
-  "64": 1.887124540845,
-  "72": 1.8851214694,
-  "80": 1.8852775859,
-  "88": 1.8853816881,
-  "96": 1.88534659834,
-  "128": 1.885247816693,
-  "160": 1.8852463318
- },
- "entangled trial gauge, 128^3, c=0.8": 1.88524664606,
- "second_chern_path (path_second_chern.py, c=0.8; Gauss nodes per segment)": {
-  "N=48, 10 nodes": 1.885264251693,
-  "N=64, 10 nodes": 1.885265014472,
-  "N=64, 20 nodes": 1.885246451609,
-  "N=96, 14 nodes": 1.885246338819,
-  "N=96, 28 nodes": 1.88524664436
- },
- "path integrand k-convergence at fixed lambda (dtheta/du)": {
-  "segment 2, u=0.9": {
-   "48": -0.280800533584,
-   "64": -0.280890586377,
-   "96": -0.280899052149,
-   "128": -0.280899069007
+  "Nz=64": {
+   "32": 0.19370953
   },
-  "segment 1, u=0.1": {
-   "48": -0.881049358867,
-   "64": -0.881049362268,
-   "96": -0.881049362271,
-   "128": -0.881049362271
-  }
+  "Nz=128": {
+   "32": 0.19385376,
+   "48": 0.19794982
+  },
+  "Nz=256": {
+   "32": 0.1938898
+  },
+  "Wilson-loop error": "falls as 1/Nz^2 (5.8e-4, 1.4e-4, 3.6e-5); the Nz -> infinity value at q=32 is 0.19390, i.e. +7.7e-4 above Nz=32",
+  "extrapolation": "Nz=32 series corrected by +7.7e-4 and extrapolated in 1/q^2 from q=48,64 gives 0.20136, matching the slab truth to about 1e-5. Direct Nz=128 points: q=32 0.193854, q=48 0.197950 (Wilson-loop residual about +5e-5); 1/q^2 extrapolation of the Nz-converged q=32,48 points gives 0.2012, within 2e-4 of the truth, the remaining difference being the O(1/q^4) term."
  },
- "note": "The 1e-3 gate is met by every converged correct method: both gauge routes, uniform or stretched grids from 72^3 up, and the gauge-free path from 10 nodes up. Only the unconverged 64^3 uniform grid misses (1.9e-3), and a grid-doubling check exposes it. The nearest physically wrong answer (Neel mass only) is 0.46 away.",
- "every correct method we ran vs the 1e-3 gate (|error|, pass)": {
-  "Chern-Simons, smooth gauge, uniform 64^3 (not converged)": [
-   "1.9e-03",
-   false
-  ],
-  "Chern-Simons, smooth gauge, uniform 72^3": [
-   "1.3e-04",
-   true
-  ],
-  "Chern-Simons, smooth gauge, uniform 80^3": [
-   "3.1e-05",
-   true
-  ],
-  "Chern-Simons, smooth gauge, uniform 96^3": [
-   "1.0e-04",
-   true
-  ],
-  "Chern-Simons, smooth gauge, uniform 128^3": [
-   "1.2e-06",
-   true
-  ],
-  "Chern-Simons, smooth gauge, stretched 48^3": [
-   "3.5e-05",
-   true
-  ],
-  "gauge-free second-Chern path, 48^3, 10 nodes": [
-   "1.8e-05",
-   true
-  ],
-  "gauge-free second-Chern path, 96^3, 14 nodes": [
-   "3.1e-07",
-   true
-  ],
-  "gauge-free second-Chern path, 96^3, 28 nodes": [
-   "1.6e-09",
-   true
-  ]
+ "decomposition": {
+  "theta (Chern-Simons)": 1.491356062731,
+  "theta/2pi": 0.2373566893,
+  "top-half surface Hall conductivity": 0.2373566778,
+  "cross-gap part alpha_zz - theta/2pi": -0.0359915
+ },
+ "Clifford limit J1=J2=0": {
+  "theta/2pi": 0.2648766862,
+  "slab alpha_zz": 0.2648729423
  }
 }

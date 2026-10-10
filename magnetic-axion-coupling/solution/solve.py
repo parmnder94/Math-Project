@@ -1,93 +1,91 @@
-"""Reference solution for magnetic-axion-coupling.
+"""Reference solution for magnetic-axion-coupling: the full orbital magnetoelectric coefficient alpha_zz.
 
-theta is the Chern-Simons integral of the occupied (lower two) bands in a smooth periodic gauge.
+alpha_zz = dP_z/dB_z = dM_z/dE_z (Maxwell relation of the insulating ground state). It contains the topological
+Chern-Simons part theta e^2/(2 pi h) and a non-topological cross-gap part; here the second is -0.036 e^2/h, so the
+axion angle alone does not give the answer.
 
-1. Gap and topology. The direct gap between bands 2 and 3 stays open (minimum about 0.050 eV, on a ring of radius
-   about 0.21 around (0, 0, pi)). The occupied bundle is trivial, so a smooth periodic gauge exists.
-2. Smooth gauge. Project the tau_y = -1 trial states |s> (x) |tau_y = -1> (s = up, down) onto the occupied subspace and
-   Loewdin-orthonormalize: U = P Phi (Phi^+ P Phi)^(-1/2). The overlap Phi^+ P Phi has smallest eigenvalue 0.43
-   everywhere, so U is smooth and periodic.
-3. Grid. The small-gap ring makes the integrand sharp. Each coordinate is mapped by k = k0 + (s - k0) - c sin(s - k0)
-   (c = 0.8; k0 = 0, 0, pi), a smooth periodic orientation-preserving bijection that concentrates points near the ring.
-   The Chern-Simons density is a 3-form, so it is evaluated directly in the s coordinates (no Jacobian), with FFT
-   derivatives on the uniform s grid. Convergence is spectral: N = 128 agrees with N = 160 to about 1e-11.
-4. theta = -(1/4 pi) * integral, wrapped into (-pi, pi].
-Run time about 35 s; peak memory about 1.3 GB (the eigen-decomposition is done in slabs).
+Route used here (converse effect): a slab of L layers along z (open in z, periodic in x, y) is placed in a uniform
+field E_z, i.e. the on-site energy +e E_z z_l of an electron (charge -e) in layer l. Its orbital magnetization per area
+follows from the multiband insulator formula
+    M_z = (e/hbar) Im sum_{n occ, m unocc} (E_n + E_m) <n|d_x H|m><m|d_y H|n> / (E_m - E_n)^2   (per (2 pi)^2 d^2k),
+valid because the slab's total Chern number is zero. dM_z/dE_z per area grows linearly with L once the surfaces are
+converged; the slope per layer is alpha_zz (lattice constant 1). In units with e = hbar = 1 the result is converted to
+e^2/h by a factor 2 pi. The slope converges exponentially in L (L = 14 -> 18 is within 1e-8 of L = 18 -> 22) and in
+the k grid (48^2 points).
+Run time about 15 s.
 """
 import json
 import os
 
 import numpy as np
 
-P = dict(M0=0.28, A1=0.22, A2=0.40, B1=0.08, B2=0.50, m=0.03, J1=0.20, J2=-0.05)
-N, C, K0 = 128, 0.8, (0.0, 0.0, np.pi)
+P = dict(M0=0.5, A1=0.6, A2=0.9, B1=0.3, B2=0.6, m=0.25, J1=0.35, J2=-0.25)
+NK, LAYERS, DE = 48, (14, 18), 1e-3
 
 s0 = np.eye(2, dtype=complex)
 sx = np.array([[0, 1], [1, 0]], dtype=complex)
 sy = np.array([[0, -1j], [1j, 0]])
 sz = np.diag([1.0, -1.0]).astype(complex)
-kron = np.kron  # sigma (spin) (x) tau (orbital)
+K = np.kron  # sigma (spin) (x) tau (orbital)
 
 
-def ham(kx, ky, kz, p):
-    Mk = p["M0"] - 2 * p["B1"] * (1 - np.cos(kz)) - 2 * p["B2"] * (2 - np.cos(kx) - np.cos(ky))
-    c = lambda a: np.asarray(a)[..., None, None]
-    return (c(Mk) * kron(s0, sz) + c(p["A1"] * np.sin(kz)) * kron(sz, sx)
-            + c(p["A2"] * np.sin(kx)) * kron(sx, sx) + c(p["A2"] * np.sin(ky)) * kron(sy, sx)
-            + p["m"] * kron(s0, sy) + kron(sz, p["J1"] * (s0 + sz) / 2 + p["J2"] * (s0 - sz) / 2))
+def hoppings(p):
+    """t_0 and t_{+d} with H(k) = sum_R t_R e^{i k.R}, t_{-d} = t_{+d}^dagger."""
+    t0 = (p["M0"] - 2 * p["B1"] - 4 * p["B2"]) * K(s0, sz) + p["m"] * K(s0, sy) \
+        + K(sz, p["J1"] * (s0 + sz) / 2 + p["J2"] * (s0 - sz) / 2)
+    tx = p["B2"] * K(s0, sz) + p["A2"] / 2j * K(sx, sx)
+    ty = p["B2"] * K(s0, sz) + p["A2"] / 2j * K(sy, sx)
+    tz = p["B1"] * K(s0, sz) + p["A1"] / 2j * K(sz, sx)
+    return t0, tx, ty, tz
 
 
-def stretch(n, k0, c):
-    s = np.arange(n) * 2 * np.pi / n
-    return k0 + (s - k0) - c * np.sin(s - k0)
+def slab_blocks(p, L, kx, ky):
+    t0, tx, ty, tz = hoppings(p)
+    ex, ey = np.exp(1j * kx)[:, None, None], np.exp(1j * ky)[:, None, None]
+    h = t0 + tx * ex + tx.conj().T / ex + ty * ey + ty.conj().T / ey
+    hx = 1j * (tx * ex - tx.conj().T / ex)
+    hy = 1j * (ty * ey - ty.conj().T / ey)
+    n = 4 * L
+    H = np.zeros((len(kx), n, n), complex)
+    DX, DY = np.zeros_like(H), np.zeros_like(H)
+    for l in range(L):
+        s = slice(4 * l, 4 * l + 4)
+        H[:, s, s], DX[:, s, s], DY[:, s, s] = h, hx, hy
+        if l + 1 < L:
+            s2 = slice(4 * l + 4, 4 * l + 8)
+            H[:, s, s2], H[:, s2, s] = tz, tz.conj().T
+    return H, DX, DY
 
 
-def smooth_gauge(p, n, c, k0):
-    t = np.array([1, -1j]) / np.sqrt(2)                       # tau_y eigenvector with eigenvalue -1
-    phi = np.stack([kron([1, 0], t), kron([0, 1], t)], axis=1)  # 4 x 2 trial states
-    ks = [stretch(n, k0[i], c) for i in range(3)]
-    U = np.empty((n, n, n, 4, 2), dtype=complex)
-    gap, smin = np.inf, np.inf
-    for ix in range(n):                                       # slabs keep memory low
-        KY, KZ = np.meshgrid(ks[1], ks[2], indexing="ij")
-        E, V = np.linalg.eigh(ham(np.full_like(KY, ks[0][ix]), KY, KZ, p))
-        gap = min(gap, (E[..., 2] - E[..., 1]).min())
-        Vo = V[..., :2]
-        B = phi.conj().T @ Vo                                 # <phi_a|u_n>
-        w, u = np.linalg.eigh(B @ np.conj(np.swapaxes(B, -1, -2)))
-        smin = min(smin, w.min())
-        U[ix] = Vo @ np.conj(np.swapaxes(B, -1, -2)) @ (u @ (w[..., None] ** -0.5 * np.conj(np.swapaxes(u, -1, -2))))
-    return U, gap, smin
-
-
-def chern_simons_theta(U, n):
-    kf = np.fft.fftfreq(n, 1 / n)
-
-    def der(X, ax):
-        shape = [1] * X.ndim
-        shape[ax] = n
-        return np.fft.ifft(np.fft.fft(X, axis=ax) * (1j * kf).reshape(shape), axis=ax)
-
-    Uh = np.conj(np.swapaxes(U, -1, -2))
-    A = [1j * (Uh @ der(U, a)) for a in range(3)]
-    del Uh
-    eps = {(0, 1, 2): 1, (1, 2, 0): 1, (2, 0, 1): 1, (0, 2, 1): -1, (2, 1, 0): -1, (1, 0, 2): -1}
-    total = 0
-    for (i, j, k), s in eps.items():
-        total += s * np.einsum("...ab,...ba->...", A[i], der(A[k], j)).sum()
-        total += -(2j / 3) * s * np.einsum("...ab,...bc,...ca->...", A[i], A[j], A[k]).sum()
-    return -(total * (2 * np.pi / n) ** 3) / (4 * np.pi)
+def magnetization(p, L, Ez):
+    g = (np.arange(NK) + 0.5) * 2 * np.pi / NK
+    U = np.kron(np.diag(Ez * (np.arange(L) - (L - 1) / 2)), np.eye(4))
+    total, gap = 0.0, np.inf
+    for kx in g:
+        H, DX, DY = slab_blocks(p, L, np.full(NK, kx), g)
+        E, V = np.linalg.eigh(H + U)
+        n = 2 * L
+        gap = min(gap, (E[:, n] - E[:, n - 1]).min())
+        Vh = np.conj(np.swapaxes(V, -1, -2))
+        X, Y = Vh @ DX @ V, Vh @ DY @ V
+        Eo, Eu = E[:, :n, None], E[:, None, n:]
+        total += np.imag(((Eo + Eu) * X[:, :n, n:] * np.swapaxes(Y[:, n:, :n], -1, -2) / (Eu - Eo) ** 2).sum())
+    return total * (2 * np.pi / NK) ** 2 / (2 * np.pi) ** 2, gap
 
 
 def main():
-    U, gap, smin = smooth_gauge(P, N, C, K0)
-    th = chern_simons_theta(U, N)
-    assert abs(th.imag) < 1e-10
-    theta = float(np.angle(np.exp(1j * th.real)))
-    print(f"N={N} c={C}  min direct gap on grid={gap:.4f}  min trial overlap={smin:.3f}  theta={theta:.12f}")
+    resp = []
+    for L in LAYERS:
+        mp, gap = magnetization(P, L, DE)
+        mm, _ = magnetization(P, L, -DE)
+        resp.append((mp - mm) / (2 * DE))
+    slope = (resp[1] - resp[0]) / (LAYERS[1] - LAYERS[0])
+    alpha = 2 * np.pi * slope                      # units of e^2/h
+    alpha = float((alpha + 0.5) % 1.0 - 0.5)
+    print(f"slab gap {gap:.3f}  dM/dE per area {resp}  alpha_zz = {alpha:.10f} e^2/h")
     os.makedirs("/app/output", exist_ok=True)
     with open("/app/output/answer.json", "w") as fh:
-        json.dump({"theta": theta}, fh)
+        json.dump({"alpha_zz": alpha}, fh)
 
 
 if __name__ == "__main__":

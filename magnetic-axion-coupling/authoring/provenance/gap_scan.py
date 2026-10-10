@@ -1,5 +1,4 @@
-"""Direct gap of the instruction's model: global minimum and its location, the gap along the path used in
-path_second_chern.py, and the gap for parameter changes used in the ablations.  usage: python3 gap_scan.py"""
+"""Direct and indirect gap of the instruction's model.  usage: python3 gap_scan.py"""
 import json
 
 import numpy as np
@@ -30,17 +29,8 @@ def min_gap(p, n=48):
 
 
 if __name__ == "__main__":
-    out = {}
     g, k = min_gap(PARAMS)
-    out["model: min direct gap (eV) and location"] = [g, k, "radius in (kx,ky) = %.4f" % np.hypot(k[0], k[1])]
-    path = []
-    for lam in np.linspace(0, 1, 21):
-        q = dict(PARAMS)
-        a, b = min(1, 2 * lam), max(0, 2 * lam - 1)
-        q.update(m=a * PARAMS["m"], J1=b * PARAMS["J1"], J2=b * PARAMS["J2"])
-        path.append([round(float(lam), 3), round(min_gap(q, 40)[0], 5)])
-    out["gap along the path (lambda, gap): m ramped on [0,1/2], exchange on [1/2,1]"] = path
-    jp = (PARAMS["J1"] + PARAMS["J2"]) / 2
-    out["J1 = J2 = (J1+J2)/2: min gap"] = min_gap(dict(PARAMS, J1=jp, J2=jp))[0]
-    out["exchange doubled: min gap"] = min_gap(dict(PARAMS, J1=2 * PARAMS["J1"], J2=2 * PARAMS["J2"]))[0]
+    E = np.linalg.eigvalsh(ham(*np.meshgrid(*(np.arange(40) * 2 * np.pi / 40,) * 3, indexing="ij"), PARAMS))
+    out = {"min direct gap (eV) and location": [g, k],
+           "indirect gap on a 40^3 grid (eV)": float(E[..., 2].min() - E[..., 1].max())}
     print(json.dumps(out, indent=1))

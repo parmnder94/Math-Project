@@ -1,0 +1,1 @@
+N=64 c=0.0 trial=tauy theta=1.491356062731 wrapped=1.491356062731 imag=6.8e-19 min_overlap=0.522 grid_gap=0.6403

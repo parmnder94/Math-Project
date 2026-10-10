@@ -1,7 +1,8 @@
 {
- "reference theta": 1.885246645979,
- "quantized value pi assumed (time-reversal-symmetric TI)": 3.141592653589793,
- "sign convention reversed (A = -i<u|du> or left-handed k basis)": -1.885246645979,
- "exchange dropped (Neel mass only, J1 = J2 = 0)": 2.345230201940192,
- "orbital dependence of the exchange dropped (J1 = J2 = average)": "gapless: min direct gap 1.4e-13, theta undefined"
+ "reference alpha_zz (e^2/h)": 0.2013551671,
+ "axion angle only, theta/2pi (Chern-Simons part, what a theta calculation gives)": 0.23735668929369588,
+ "surface (top-half layer-resolved) Hall conductivity of a slab": 0.23735667775559058,
+ "sign or field orientation reversed": -0.2013551671,
+ "half-quantized value assumed": 0.5,
+ "Hofstadter supercell q = 32, forward difference, not extrapolated": 0.15491451
 }

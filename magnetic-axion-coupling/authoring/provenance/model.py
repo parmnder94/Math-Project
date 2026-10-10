@@ -1,7 +1,7 @@
-"""Bloch Hamiltonian of the instruction, its k-derivatives, and the occupied-projector derivative."""
+"""Bloch Hamiltonian of the instruction, its real-space hoppings, k-derivatives, and the occupied-projector derivative."""
 import numpy as np
 
-PARAMS = dict(M0=0.28, A1=0.22, A2=0.40, B1=0.08, B2=0.50, m=0.03, J1=0.20, J2=-0.05)
+PARAMS = dict(M0=0.5, A1=0.6, A2=0.9, B1=0.3, B2=0.6, m=0.25, J1=0.35, J2=-0.25)
 s0 = np.eye(2, dtype=complex)
 sx = np.array([[0, 1], [1, 0]], dtype=complex)
 sy = np.array([[0, -1j], [1j, 0]])
@@ -41,3 +41,13 @@ def projector_and_derivatives(H, dHs, nocc=2):
         out.append(V @ Y @ Vh)
     Vo = V[..., :nocc]
     return Vo @ np.conj(np.swapaxes(Vo, -1, -2)), out, E
+
+
+def hoppings(p):
+    """t_0 and t_{+d} (d = x, y, z) with H(k) = sum_R t_R e^{i k.R}, t_R = <0|H|R>, t_{-d} = t_{+d}^dagger."""
+    t0 = (p["M0"] - 2 * p["B1"] - 4 * p["B2"]) * K(s0, sz) + p["m"] * K(s0, sy) \
+        + K(sz, p["J1"] * (s0 + sz) / 2 + p["J2"] * (s0 - sz) / 2)
+    tx = p["B2"] * K(s0, sz) + p["A2"] / 2j * K(sx, sx)
+    ty = p["B2"] * K(s0, sz) + p["A2"] / 2j * K(sy, sx)
+    tz = p["B1"] * K(s0, sz) + p["A1"] / 2j * K(sz, sx)
+    return t0, tx, ty, tz
