@@ -1,38 +1,66 @@
 {
   "reference": {
     "p": 0.6867588973650294,
-    "abs_error": 0.0
+    "c": -0.08358893186320727,
+    "abs_error_p": 0.0,
+    "abs_error_c": 0.0
   },
   "endpoint frame D_r(1) set to the identity": {
     "p": 0.4744223095883131,
-    "abs_error": 0.21233658777671627
+    "c": -0.2858291785605649,
+    "abs_error_p": 0.21233658777671627,
+    "abs_error_c": 0.2022402466973576
   },
   "slow connection omitted": {
     "p": 0.4933306585315909,
-    "abs_error": 0.19342823883343846
+    "c": -2.66183557291928,
+    "abs_error_p": 0.19342823883343846,
+    "abs_error_c": 2.5782466410560727
   },
-  "connection from R_r only (-pi K_r, D_r frame term dropped)": {
+  "connection from R_r only (-pi K_r)": {
     "p": 0.749078089741988,
-    "abs_error": 0.06231919237695863
+    "c": -0.4399078780655682,
+    "abs_error_p": 0.06231919237695863,
+    "abs_error_c": 0.35631894620236093
   },
-  "reversed pulse keeps the carrier phase (no phi -> -phi)": {
+  "reversed pulse keeps the carrier phase": {
     "p": 0.7449935798879447,
-    "abs_error": 0.058234682522915276
-  },
-  "carrier phases ignored in the effective coupling": {
-    "p": 0.7243620193803594,
-    "abs_error": 0.037603122015330004
+    "c": 0.36613536427601245,
+    "abs_error_p": 0.058234682522915276,
+    "abs_error_c": 0.4497242961392197
   },
   "(Q-P) part of the eighth-order block omitted": {
     "p": 0.9814679273948493,
-    "abs_error": 0.2947090300298199
+    "c": -0.05746340144261766,
+    "abs_error_p": 0.2947090300298199,
+    "abs_error_c": 0.026125530420589616
   },
-  "eighth-order coupling omitted": {
-    "p": 1.0,
-    "abs_error": 0.3132411026349706
+  "stroboscopic gauge: no kick at the pulse boundaries (c = 0)": {
+    "p": 0.6867588973650294,
+    "c": 0.0,
+    "abs_error_p": 0.0,
+    "abs_error_c": 0.08358893186320727
   },
-  "B_8 off-diagonal coefficient 1e-6 too large": {
-    "p": 0.6867589816636979,
-    "abs_error": 8.429866846198808e-08
+  "kick only at the start of each pulse": {
+    "p": 0.6867588973650294,
+    "c": 0.5850479262823164,
+    "abs_error_p": 0.0,
+    "abs_error_c": 0.6686368581455236
+  },
+  "kick only at the end of each pulse": {
+    "p": 0.6867588973650294,
+    "c": -0.6686368581455236,
+    "abs_error_p": 0.0,
+    "abs_error_c": 0.5850479262823164
+  },
+  "kick denominators without the 2Q gap (-l only)": {
+    "p": 0.6867588973650294,
+    "c": -0.4199507013253934,
+    "abs_error_p": 0.0,
+    "abs_error_c": 0.33636176946218616
+  },
+  "naive numerical slope (p_N - p_inf)/eps_N at N = 1e40 (c2 about -15)": {
+    "c_estimate": -0.08368043186320727,
+    "abs_error_c": 9.15e-05
   }
 }

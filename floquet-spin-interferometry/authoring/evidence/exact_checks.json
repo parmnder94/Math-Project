@@ -2,6 +2,7 @@
   "B_1..B_7": "identically zero",
   "B_8": "(23539/2160)(Q-P) + (8447/540) X",
   "generator": "G_r = (1/10)[(23539/2160)(Q-P) + (8447/540) X_phi] - (3 pi/2) K_r; reversed pulse phi -> -phi, connection sign flipped",
-  "p_minus": "0.686758897365029385815907257186",
-  "checks": "solution/solve.py (closed-form endpoint frames, 40-digit expm) and an independent script using numerical expm for the frames agree to 30 digits; authoring/provenance/floquet.py independently reproduces B_1..B_7 = 0 and B_8; the same pipeline with the constants of the earlier rational version reproduces its fraction 1467167323933/5157470703125 to 3e-41"
+  "checks": "solution/solve.py (closed-form endpoint frames, 40-digit expm) and an independent script using numerical expm for the frames agree to 30 digits; authoring/provenance/floquet.py independently reproduces B_1..B_7 = 0 and B_8; the same pipeline with the constants of the earlier rational version reproduces its fraction 1467167323933/5157470703125 to 3e-41",
+  "c": "-0.0835889318632072795759772701614 (first-order van Vleck kick at the pulse boundaries; independent script agrees to 25 digits)",
+  "p_inf": "0.686758897365029385815907257186"
 }

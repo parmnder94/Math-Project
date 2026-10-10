@@ -46,8 +46,8 @@ $$
 +|1\rangle_C\langle1|\otimes\widetilde U_{1,N}\widetilde U_{2,N}\widetilde U_{3,N}.
 $$
 
-With $ \Delta $ fixed, what is the $ N\to\infty $ probability of measuring $ |-\rangle_C $?
+With $ \Delta $ fixed, the probability $ p_N $ of measuring $ |-\rangle_C $ has an expansion $ p_N=p_\infty+c\,\epsilon_N+O(\epsilon_N^2) $ as $ N\to\infty $. Find $ p_\infty $ and $ c $.
 
-Write `/app/output/answer.json` containing a JSON object with one numeric field, `p`, holding the probability. It is compared with the exact value and must agree to an absolute error of at most $ 10^{-9} $.
+Write `/app/output/answer.json` containing a JSON object with two numeric fields: `p`, holding $ p_\infty $, and `c`, holding $ c $. Each is compared with the exact value and must agree to an absolute error of at most $ 10^{-9} $.
 
 You have 9000 seconds to complete this task. Do not cheat by using online solutions or hints specific to this task.
